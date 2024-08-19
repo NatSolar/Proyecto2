@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Proyecto2.Models.USUARIO>
+
+<h4>Gestión de perfiles de usuario</h4>
+<br />
+
+<button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("RegistrarUsuario", "Usuarios")'">Registrar</button>
+<br />
+<br />
+<table class="table table-striped table-hover">
+    <tr>
+        <th>Nombre completo</th>
+        <th>Correo electrónico</th>
+        <th>Fecha de creación</th>
+        <th>Rol</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre) @Html.DisplayFor(modelItem => item.apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ROL.nombre)
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm btn-outline-dark" onclick="location.href='@Url.Action("EditarUsuario", "Usuarios", new { id = item.id })'">Editar</button>
+                <button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("DetallesUsuario", "Usuarios", new { id = item.id })'">Detalles</button>
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="location.href='@Url.Action("EliminarUsuario", "Usuarios", new { id = item.id })'">Eliminar</button>
+            </td>
+        </tr>
+    }
+
+</table>

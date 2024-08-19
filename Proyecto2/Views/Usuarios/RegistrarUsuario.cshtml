@@ -1,0 +1,217 @@
+﻿@model IEnumerable<Proyecto2.Models.ROL>
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Registro usuario</h3>
+            <br />
+            <form action="@Url.Action("CrearUsuario", "Usuarios")" method="post">
+                <div class="row">
+                    <div class="col">
+                        <!-- Detalles personales del empleado-->
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Detalles personales</h5>
+                                <hr />
+
+                                <div class="mb-3">
+                                    <label for="inputNombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="inputNombre" name="nombre">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputApellido" class="form-label">Apellido</label>
+                                    <input type="text" class="form-control" id="inputApellido" name="apellido">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputFechaNacimiento" class="form-label">Fecha de nacimiento</label>
+                                    <input type="date" class="form-control" id="inputFechaNacimiento" name="fechaNacimiento">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputContrasena" class="form-label">Género</label>
+                                    <select class="form-select" name="idGenero">
+                                        <option value="1">Femenino</option>
+                                        <option value="2">Masculino</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputTelefono" class="form-label">Teléfono</label>
+                                    <input type="number" class="form-control" id="inputTelefono" name="telefono">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputDireccion" class="form-label">Dirección</label>
+                                    <textarea class="form-control" id="inputDireccion" name="direccion"></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputNacionalidad" class="form-label">Nacionalidad</label>
+                                    <input type="text" class="form-control" id="inputNacionalidad" name="nacionalidad">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- Detalles de inicio sesión del empleado-->
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Detalles inicio sesión</h5>
+                                <hr />
+
+                                <div class="mb-3">
+                                    <label for="inputEmail" class="form-label">Correo electrónico</label>
+                                    <input type="email" class="form-control" id="inputEmail" name="email">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputContrasena" class="form-label">Contraseña temporal</label>
+                                    <input type="text" class="form-control" id="inputContrasena" name="contrasena">
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Detalles relacionados a la compañia-->
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Detalles de compañía</h5>
+                                <hr />
+
+                                <div class="mb-3">
+                                    <label for="inputContrasena" class="form-label">Departamento</label>
+                                    <select class="form-select" name="idDepartamento" id="idDepartamento"></select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputPuesto" class="form-label">Puesto</label>
+                                    <select class="form-select" name="idPuesto" id="idPuesto"></select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputFechaUnion" class="form-label">Fecha de unión</label>
+                                    <input type="date" class="form-control" id="inputFechaUnion" name="fechaUnion">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputRol" class="form-label">Rol</label>
+                                    <select class="form-select" name="idRol" id="idRol">
+                                        @foreach (var item in Model)
+                                        {
+                                            <option value="@Html.DisplayFor(modelItem => item.id)">@Html.DisplayFor(modelItem => item.nombre)</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="mb-3" id="divOperaciones">
+                                    <label for="inputRol" class="form-label">Operaciones</label>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputSalarioBase" class="form-label">Salario base</label>
+                                    <input type="number" class="form-control" id="inputSalarioBase" name="salarioBase">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <button class="btn btn-primary w-100 py-2" type="submit">Registrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='@Url.Action("GestionUsuarios", "Usuarios")'">Regresar</button>
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            ListarDepartamento();
+            ListarOperaciones();
+        })
+
+        function ListarDepartamento() {
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idDepartamento")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerDepartamentos", "Usuarios")',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.nombre).appendTo("#idDepartamento")
+                        })
+
+                        ListarPuestos();
+                    }
+                }
+            })
+        }
+
+        $("#idDepartamento").on("change", function () {
+            ListarPuestos();
+        })
+
+        $("#idRol").on("change", function () {
+            ListarOperaciones();
+        })
+
+        function ListarPuestos() {
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idPuesto")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerPuestos", "Usuarios")',
+                type: "POST",
+                data: JSON.stringify({ idDepartamento: $("#idDepartamento option:selected").val()}),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.nombre).appendTo("#idPuesto")
+                        })
+                    }
+                }
+            })
+        }
+
+
+        function ListarOperaciones() {
+
+            $("#divOperaciones").children().remove();
+
+            jQuery.ajax({
+                url: '@Url.Action("TraerOperaciones", "Usuarios")',
+                type: "POST",
+                data: JSON.stringify({ idRol: $("#idRol option:selected").val() }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<input>").attr({ "value": item.idOperacion, "type": "checkbox", "name": "operaciones_chks", "id": "chk_" + item.idOperacion }).appendTo("#divOperaciones")
+                            $("<span>").text(" " + item.nombreOperacion).appendTo("#divOperaciones")
+                            $("<br>").appendTo("#divOperaciones")
+                        })
+                    }
+                }
+            });
+
+        }
+
+    </script>
+    
+
+}
+

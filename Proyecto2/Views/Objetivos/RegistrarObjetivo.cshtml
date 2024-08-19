@@ -1,0 +1,208 @@
+﻿@model Proyecto2.Models.OBJETIVO
+
+<div class="card">
+    <div class="card-header">
+        <h3>Registro de objetivos</h3>
+    </div>
+    <div class="card-body">
+        <form action="@Url.Action("GuardarObjetivo", "Objetivos")" method="post">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <label for="idDepartamento" class="form-label">Departamento</label>
+                        <select class="form-select" name="idDepartamento" id="idDepartamento"></select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <label for="idEmpleado" class="form-label">Empleado</label>
+                        <select class="form-select" name="idEmpleado" id="idEmpleado"></select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <label for="idPeriodo" class="form-label">Periodo</label>
+                        <select class="form-select" name="idPeriodo" id="idPeriodo"></select>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="card">
+                <div class="card-header">
+                    <h5>Detalle de objetivo</h5>
+                </div>
+                <div class="card-body" id="objetivosSection">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="mb-3">
+                                <label for="detalle" class="form-label">Detalle</label>
+                                <input type="text" class="form-control detalle-obj" id="detalle" name="detalle" />
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="mb-3">
+                                <label for="valorReferencia" class="form-label">Valor de referencia</label>
+                                <input type="number" class="form-control referencia-obj" id="valorReferencia" name="valorReferencia" />
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <div class="mb-3">
+                                        <label for="idDepartamento" class="form-label">Peso</label>
+                                        <input type="number" class="form-control peso-obj" id="peso" name="peso" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3 mt-4 pt-2">
+                                        <button type="button" class="btn btn-primary agregarObjetivo">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-success float-end">Registrar</button>
+        </form>
+    </div>
+</div>
+<br />
+<button type="button" class="btn btn-outline-secondary" onclick="location.href='@Url.Action("ListaObjetivos", "Objetivos")'">Regresar</button>
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            ListarDepartamentos();
+
+        })
+
+        $("#idDepartamento").on("change", function () {
+            ListarEmpleados();
+        })
+
+        $(document).on("click", "button.agregarObjetivo", function () {
+            var detalle = $("input[id='detalle']").val();
+            var valorReferencia = $("input[id='valorReferencia']").val();
+            var peso = $("input[id='peso']").val();
+            var id = $('.detalle-obj').length;
+
+            $('#objetivosSection').append(
+                $("<div>").addClass("row nuevo-objetivo").data("id-objetivo", id).append(
+                    $("<div>").addClass("col-sm-3").append(
+                        $("<div>").addClass("mb-3").append(
+                            $("<input>").addClass("form-control detalle-obj").attr({ "readonly": "readonly", name: "objetivos-d" })
+                                .data("id", id)
+                                .val(detalle)
+                        )
+                    ),
+
+                    $("<div>").addClass("col-sm-3").append(
+                        $("<div>").addClass("mb-3").append(
+                            $("<input>").addClass("form-control referencia-obj").attr({ "readonly": "readonly", name: "objetivos-r" })
+                                .data("referencia", id)
+                                .val(valorReferencia)
+                        )
+                    ),
+
+                    $("<div>").addClass("col-sm-3").append(
+                        $("<div>").addClass("row").append(
+                            $("<div>").addClass("col-sm-9").append(
+                                $("<div>").addClass("mb-3").append(
+                                    $("<input>").addClass("form-control peso-obj").attr({ "readonly": "readonly", name: "objetivos-p" })
+                                        .data("peso", peso)
+                                        .val(peso)
+                                ),
+                            ),
+                            $("<div>").addClass("col-sm-3").append(
+                                $("<div>").addClass("mb-3").append(
+                                    $("<button>").addClass("btn btn-outline-danger eliminarObj").text("-")
+                                        .data("id", id)
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+
+            $("input[id='detalle']").val('');
+            $("input[id='valorReferencia']").val('');
+            $("input[id='peso']").val('');
+
+        });
+
+
+        function ListarDepartamentos() {
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idDepartamento")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerDepartamentos", "Objetivos")',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.nombre).appendTo("#idDepartamento")
+                        })
+
+                        ListarEmpleados();
+                    }
+                }
+            })
+        }
+
+        function ListarEmpleados() {
+
+            $("#idEmpleado option").remove();
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idEmpleado")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerEmpleadosPorDepartamento", "Objetivos")',
+                type: "POST",
+                data: JSON.stringify({ idDepartamento: $("#idDepartamento option:selected").val()}),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.nombre + " " + item.apellido).appendTo("#idEmpleado")
+                        })
+
+                        ListarPeriodos();
+                    }
+                }
+            })
+        }
+
+        function ListarPeriodos() {
+
+            $("#idPeriodo option").remove();
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idPeriodo")
+
+            jQuery.ajax({
+                url: '@Url.Action("ListarPeriodos", "Objetivos")',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.detalle).appendTo("#idPeriodo")
+                        })
+                    }
+                }
+            })
+        }
+
+    </script>
+}

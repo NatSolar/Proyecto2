@@ -1,0 +1,154 @@
+﻿@model Proyecto2.Models.NOMINA
+
+<div class="row">
+    <div class="card">
+        <h3 class="card-title">Generar nómina</h3>
+        <hr />
+        <form action="@Url.Action("GenerarNomina", "Nominas")" method="post">
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="idDepartamento" class="form-label">Departamento</label>
+                        <select class="form-select" name="idDepartamento" id="idDepartamento"></select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="idUsuario" class="form-label">Empleado</label>
+                        <select class="form-select" name="idUsuario" id="idUsuario"></select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="ano" class="form-label">Año</label>
+                        <select class="form-select" name="ano" id="ano">
+                            <option value="00" disabled selected>Seleccionar</option>
+                            <option value="2024">2024</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="mes" class="form-label">Mes</label>
+                        <select class="form-select" name="mes" id="mes">
+                            <option value="00" disabled selected>Seleccionar</option>
+                            <option value="8">Agosto</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary" id="btnGenerar">Generar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<button type="button" class="btn btn-outline-secondary" onclick="location.href='@Url.Action("GenerarNomina", "Nominas")'">Regresar</button>
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            ListarDepartamentos();
+
+            if (!checkAllSelect()) {
+                $("#btnGenerar").attr("disabled", true);
+            }
+
+        })
+
+        $("#idDepartamento").on("change", function () {
+            ListarEmpleados();
+
+            if (checkAllSelect()) {
+                $("#btnGenerar").removeAttr("disabled");
+            }
+
+        })
+
+        $("#mes").on("change", function () {
+
+            if (checkAllSelect()) {
+                $("#btnGenerar").removeAttr("disabled");
+            }
+
+        })
+
+        $("#ano").on("change", function () {
+
+            if (checkAllSelect()) {
+                $("#btnGenerar").removeAttr("disabled");
+            }
+
+        })
+
+        $("#idUsuario").on("change", function () {
+
+            if (checkAllSelect()) {
+                $("#btnGenerar").removeAttr("disabled");
+            }
+
+        })
+
+
+        function ListarDepartamentos() {
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idDepartamento")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerDepartamentos", "Nominas")',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.nombre).appendTo("#idDepartamento")
+                        })
+
+                        ListarEmpleados();
+                    }
+                }
+            })
+        }
+
+        function ListarEmpleados() {
+
+            $("#idUsuario option").remove();
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idUsuario")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerEmpleadosPorDepartamento", "Nominas")',
+                type: "POST",
+                data: JSON.stringify({ idDepartamento: $("#idDepartamento option:selected").val()}),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.nombre + " "+ item.apellido).appendTo("#idUsuario")
+                        })
+                    }
+                }
+            })
+        }
+
+        function checkAllSelect() {
+            if ($('#idDepartamento option:selected:not([disabled])').length > 0 &&
+                $('#idUsuario option:selected:not([disabled])').length > 0 &&
+                $('#ano option:selected:not([disabled])').length > 0 &&
+                $('#mes option:selected:not([disabled])').length > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    </script>
+}

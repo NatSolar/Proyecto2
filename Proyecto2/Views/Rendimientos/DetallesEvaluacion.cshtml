@@ -1,0 +1,62 @@
+﻿@model Proyecto2.Models.EVALUACION
+
+<div class="card">
+    <div class="card-header">
+        <h3>Detalles de evaluación</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <p><b>Departamento: </b>@Html.DisplayFor(Model => Model.USUARIO.DEPARTAMENTO.nombre)</p>
+                <p><b>Empleado: </b>@Html.DisplayFor(Model => Model.USUARIO.nombre) @Html.DisplayFor(Model => Model.USUARIO.apellido)</p>
+                <p><b>Período: </b>@Html.DisplayFor(Model => Model.PERIODO.desde) - @Html.DisplayFor(Model => Model.PERIODO.hasta)</p>
+            </div>
+            <div class="col">
+                <p><b>Evaluador: </b>@Html.DisplayFor(Model => Model.USUARIO1.nombre) @Html.DisplayFor(Model => Model.USUARIO1.apellido)</p>
+                <p><b>Fecha de evaluación: </b>@Html.DisplayFor(Model => Model.fechaEvaluacion)</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5>Objetivos a evaluar</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Detalle</th>
+                            <th>Valor referencia</th>
+                            <th>Peso</th>
+                            <th>Nota obtenida</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in (IEnumerable<Proyecto2.Models.OBJETIVO>)ViewBag.ObjetivosList)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(m => item.id)</td>
+                                <td>@Html.DisplayFor(m => item.detalle)</td>
+                                <td>@Html.DisplayFor(m => item.valorReferencia)</td>
+                                <td>@Html.DisplayFor(m => item.peso)</td>
+                                <td>@Html.DisplayFor(m => item.nota)</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="4"><b>Nota promedio:</b></td>
+                            <td><b>@Html.DisplayFor(Model => Model.notaPromedio)</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="mb-3">
+                        <p><b>Retroalimentación: </b>@Html.DisplayFor(Model => Model.retroalimentacion)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='@Url.Action("ListaRendimientos", "Rendimientos")'">Regresar</button>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<section>
+    <h1>Error, no tienes permiso</h1>
+</section>
+<section>
+    <div>
+        <h2>Error</h2>
+        <div>
+            <h3>Sin autorización</h3>
+            @if (ViewBag.Operacion != "")
+            {
+                <p>Operación: @ViewBag.Operacion</p>
+            }
+            @if (ViewBag.Modulo != "")
+            {
+                <p>Operación: @ViewBag.Modulo</p>
+            }
+            @if (ViewBag.MessageException != "")
+            {
+                <p>Operación: @ViewBag.MessageException</p>
+            }
+        </div>
+    </div>
+</section>

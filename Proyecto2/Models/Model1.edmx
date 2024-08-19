@@ -1,0 +1,1518 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BONIFICACIONES">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" Nullable="false" />
+          <Property Name="idNomina" Type="int" Nullable="false" />
+          <Property Name="detalle" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="monto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DEDUCCIONES">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" Nullable="false" />
+          <Property Name="idNomina" Type="int" Nullable="false" />
+          <Property Name="detalle" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="monto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DEPARTAMENTO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EVALUACION">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idEmpleado" Type="int" Nullable="false" />
+          <Property Name="idPeriodo" Type="int" Nullable="false" />
+          <Property Name="notaPromedio" Type="int" Nullable="false" />
+          <Property Name="retroalimentacion" Type="varchar" MaxLength="500" />
+          <Property Name="fechaEvaluacion" Type="datetime" Nullable="false" />
+          <Property Name="idEvaluador" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EVENTO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="informacion" Type="varchar(max)" Nullable="false" />
+          <Property Name="horaEntrada" Type="datetime" Nullable="false" />
+          <Property Name="horaSalida" Type="datetime" />
+        </EntityType>
+        <EntityType Name="METODO_PAGO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MODULO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NOMINA">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" Nullable="false" />
+          <Property Name="ano" Type="int" Nullable="false" />
+          <Property Name="mes" Type="int" Nullable="false" />
+          <Property Name="estado" Type="int" Nullable="false" />
+          <Property Name="idMetodoPago" Type="int" Nullable="false" />
+          <Property Name="salarioBase" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="bonificacionesTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="deduccionesTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="salarioNeto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="comentario" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="fechaRegistro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OBJETIVOS">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idEmpleado" Type="int" Nullable="false" />
+          <Property Name="idPeriodo" Type="int" Nullable="false" />
+          <Property Name="detalle" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="valorReferencia" Type="int" Nullable="false" />
+          <Property Name="peso" Type="int" Nullable="false" />
+          <Property Name="nota" Type="int" Nullable="false" />
+          <Property Name="retroalimentacion" Type="varchar" MaxLength="500" />
+          <Property Name="fechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="idEvaluador" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OPERACIONES">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="idModulo" Type="int" />
+        </EntityType>
+        <EntityType Name="PERIODO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="detalle" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="desde" Type="date" Nullable="false" />
+          <Property Name="hasta" Type="date" Nullable="false" />
+          <Property Name="ano" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PUESTO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idDepartamento" Type="int" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ROL_OPERACION">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idRol" Type="int" />
+          <Property Name="idOperacion" Type="int" />
+        </EntityType>
+        <EntityType Name="TURNO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idEmpleado" Type="int" Nullable="false" />
+          <Property Name="dias" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="horaEntrada" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="horaSalida" Type="varchar" MaxLength="100" />
+          <Property Name="fechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="idEncargado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="contrasena" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="fechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="idRol" Type="int" Nullable="false" />
+          <Property Name="direccion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="telefono" Type="int" Nullable="false" />
+          <Property Name="fechaNacimiento" Type="date" Nullable="false" />
+          <Property Name="idGenero" Type="int" Nullable="false" />
+          <Property Name="nacionalidad" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="idDepartamento" Type="int" Nullable="false" />
+          <Property Name="idPuesto" Type="int" Nullable="false" />
+          <Property Name="fechaUnion" Type="date" Nullable="false" />
+          <Property Name="salarioBase" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USUARIO_OPERACIONES">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" />
+          <Property Name="idRol" Type="int" />
+          <Property Name="idOperacion" Type="int" />
+          <Property Name="hasIt" Type="bit" />
+        </EntityType>
+        <Association Name="FK__BONIFICAC__idNom__70A8B9AE">
+          <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="1" />
+          <End Role="BONIFICACIONES" Type="Self.BONIFICACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOMINA">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BONIFICACIONES">
+              <PropertyRef Name="idNomina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BONIFICAC__idUsu__719CDDE7">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="BONIFICACIONES" Type="Self.BONIFICACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BONIFICACIONES">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DEDUCCION__idNom__6AEFE058">
+          <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="1" />
+          <End Role="DEDUCCIONES" Type="Self.DEDUCCIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOMINA">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DEDUCCIONES">
+              <PropertyRef Name="idNomina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DEDUCCION__idNom__6EC0713C">
+          <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="1" />
+          <End Role="DEDUCCIONES" Type="Self.DEDUCCIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOMINA">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DEDUCCIONES">
+              <PropertyRef Name="idNomina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DEDUCCION__idUsu__6BE40491">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="DEDUCCIONES" Type="Self.DEDUCCIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DEDUCCIONES">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DEDUCCION__idUsu__6FB49575">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="DEDUCCIONES" Type="Self.DEDUCCIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DEDUCCIONES">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EVALUACIO__idEmp__03BB8E22">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EVALUACION">
+              <PropertyRef Name="idEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EVALUACIO__idEva__02C769E9">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EVALUACION">
+              <PropertyRef Name="idEvaluador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EVALUACIO__idPer__01D345B0">
+          <End Role="PERIODO" Type="Self.PERIODO" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERIODO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EVALUACION">
+              <PropertyRef Name="idPeriodo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NOMINA__idMetodo__671F4F74">
+          <End Role="METODO_PAGO" Type="Self.METODO_PAGO" Multiplicity="1" />
+          <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="METODO_PAGO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="NOMINA">
+              <PropertyRef Name="idMetodoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NOMINA__idUsuari__681373AD">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="NOMINA">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OBJETIVOS__idEmp__7E02B4CC">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="OBJETIVOS" Type="Self.OBJETIVOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OBJETIVOS">
+              <PropertyRef Name="idEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OBJETIVOS__idEva__7EF6D905">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="OBJETIVOS" Type="Self.OBJETIVOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OBJETIVOS">
+              <PropertyRef Name="idEvaluador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OBJETIVOS__idPer__7D0E9093">
+          <End Role="PERIODO" Type="Self.PERIODO" Multiplicity="1" />
+          <End Role="OBJETIVOS" Type="Self.OBJETIVOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERIODO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OBJETIVOS">
+              <PropertyRef Name="idPeriodo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OPERACION__idMod__5FB337D6">
+          <End Role="MODULO" Type="Self.MODULO" Multiplicity="0..1" />
+          <End Role="OPERACIONES" Type="Self.OPERACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MODULO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OPERACIONES">
+              <PropertyRef Name="idModulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PUESTO__idDepart__19DFD96B">
+          <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="0..1" />
+          <End Role="PUESTO" Type="Self.PUESTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTAMENTO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PUESTO">
+              <PropertyRef Name="idDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ROL_OPERA__idOpe__656C112C">
+          <End Role="OPERACIONES" Type="Self.OPERACIONES" Multiplicity="0..1" />
+          <End Role="ROL_OPERACION" Type="Self.ROL_OPERACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OPERACIONES">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ROL_OPERACION">
+              <PropertyRef Name="idOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ROL_OPERA__idRol__6477ECF3">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="0..1" />
+          <End Role="ROL_OPERACION" Type="Self.ROL_OPERACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ROL_OPERACION">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TURNO__idEmplead__0880433F">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="TURNO" Type="Self.TURNO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TURNO">
+              <PropertyRef Name="idEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TURNO__idEncarga__09746778">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="TURNO" Type="Self.TURNO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TURNO">
+              <PropertyRef Name="idEncargado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO__idDepar__1F98B2C1">
+          <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTAMENTO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="idDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO__idPuest__208CD6FA">
+          <End Role="PUESTO" Type="Self.PUESTO" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PUESTO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="idPuesto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO__idRol__1EA48E88">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO_O__idOpe__2B0A656D">
+          <End Role="OPERACIONES" Type="Self.OPERACIONES" Multiplicity="0..1" />
+          <End Role="USUARIO_OPERACIONES" Type="Self.USUARIO_OPERACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OPERACIONES">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIO_OPERACIONES">
+              <PropertyRef Name="idOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO_O__idRol__2A164134">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="0..1" />
+          <End Role="USUARIO_OPERACIONES" Type="Self.USUARIO_OPERACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIO_OPERACIONES">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO_O__idUsu__29221CFB">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="USUARIO_OPERACIONES" Type="Self.USUARIO_OPERACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIO_OPERACIONES">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="BONIFICACIONES" EntityType="Self.BONIFICACIONES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DEDUCCIONES" EntityType="Self.DEDUCCIONES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DEPARTAMENTO" EntityType="Self.DEPARTAMENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EVALUACION" EntityType="Self.EVALUACION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EVENTO" EntityType="Self.EVENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="METODO_PAGO" EntityType="Self.METODO_PAGO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MODULO" EntityType="Self.MODULO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NOMINA" EntityType="Self.NOMINA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OBJETIVOS" EntityType="Self.OBJETIVOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OPERACIONES" EntityType="Self.OPERACIONES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERIODO" EntityType="Self.PERIODO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PUESTO" EntityType="Self.PUESTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROL" EntityType="Self.ROL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROL_OPERACION" EntityType="Self.ROL_OPERACION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TURNO" EntityType="Self.TURNO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIO_OPERACIONES" EntityType="Self.USUARIO_OPERACIONES" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BONIFICAC__idNom__70A8B9AE" Association="Self.FK__BONIFICAC__idNom__70A8B9AE">
+            <End Role="NOMINA" EntitySet="NOMINA" />
+            <End Role="BONIFICACIONES" EntitySet="BONIFICACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BONIFICAC__idUsu__719CDDE7" Association="Self.FK__BONIFICAC__idUsu__719CDDE7">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="BONIFICACIONES" EntitySet="BONIFICACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DEDUCCION__idNom__6AEFE058" Association="Self.FK__DEDUCCION__idNom__6AEFE058">
+            <End Role="NOMINA" EntitySet="NOMINA" />
+            <End Role="DEDUCCIONES" EntitySet="DEDUCCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DEDUCCION__idNom__6EC0713C" Association="Self.FK__DEDUCCION__idNom__6EC0713C">
+            <End Role="NOMINA" EntitySet="NOMINA" />
+            <End Role="DEDUCCIONES" EntitySet="DEDUCCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DEDUCCION__idUsu__6BE40491" Association="Self.FK__DEDUCCION__idUsu__6BE40491">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="DEDUCCIONES" EntitySet="DEDUCCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DEDUCCION__idUsu__6FB49575" Association="Self.FK__DEDUCCION__idUsu__6FB49575">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="DEDUCCIONES" EntitySet="DEDUCCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EVALUACIO__idEmp__03BB8E22" Association="Self.FK__EVALUACIO__idEmp__03BB8E22">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="EVALUACION" EntitySet="EVALUACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EVALUACIO__idEva__02C769E9" Association="Self.FK__EVALUACIO__idEva__02C769E9">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="EVALUACION" EntitySet="EVALUACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EVALUACIO__idPer__01D345B0" Association="Self.FK__EVALUACIO__idPer__01D345B0">
+            <End Role="PERIODO" EntitySet="PERIODO" />
+            <End Role="EVALUACION" EntitySet="EVALUACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NOMINA__idMetodo__671F4F74" Association="Self.FK__NOMINA__idMetodo__671F4F74">
+            <End Role="METODO_PAGO" EntitySet="METODO_PAGO" />
+            <End Role="NOMINA" EntitySet="NOMINA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NOMINA__idUsuari__681373AD" Association="Self.FK__NOMINA__idUsuari__681373AD">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="NOMINA" EntitySet="NOMINA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OBJETIVOS__idEmp__7E02B4CC" Association="Self.FK__OBJETIVOS__idEmp__7E02B4CC">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="OBJETIVOS" EntitySet="OBJETIVOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OBJETIVOS__idEva__7EF6D905" Association="Self.FK__OBJETIVOS__idEva__7EF6D905">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="OBJETIVOS" EntitySet="OBJETIVOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OBJETIVOS__idPer__7D0E9093" Association="Self.FK__OBJETIVOS__idPer__7D0E9093">
+            <End Role="PERIODO" EntitySet="PERIODO" />
+            <End Role="OBJETIVOS" EntitySet="OBJETIVOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OPERACION__idMod__5FB337D6" Association="Self.FK__OPERACION__idMod__5FB337D6">
+            <End Role="MODULO" EntitySet="MODULO" />
+            <End Role="OPERACIONES" EntitySet="OPERACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PUESTO__idDepart__19DFD96B" Association="Self.FK__PUESTO__idDepart__19DFD96B">
+            <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+            <End Role="PUESTO" EntitySet="PUESTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROL_OPERA__idOpe__656C112C" Association="Self.FK__ROL_OPERA__idOpe__656C112C">
+            <End Role="OPERACIONES" EntitySet="OPERACIONES" />
+            <End Role="ROL_OPERACION" EntitySet="ROL_OPERACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROL_OPERA__idRol__6477ECF3" Association="Self.FK__ROL_OPERA__idRol__6477ECF3">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="ROL_OPERACION" EntitySet="ROL_OPERACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TURNO__idEmplead__0880433F" Association="Self.FK__TURNO__idEmplead__0880433F">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="TURNO" EntitySet="TURNO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TURNO__idEncarga__09746778" Association="Self.FK__TURNO__idEncarga__09746778">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="TURNO" EntitySet="TURNO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO__idDepar__1F98B2C1" Association="Self.FK__USUARIO__idDepar__1F98B2C1">
+            <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO__idPuest__208CD6FA" Association="Self.FK__USUARIO__idPuest__208CD6FA">
+            <End Role="PUESTO" EntitySet="PUESTO" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO__idRol__1EA48E88" Association="Self.FK__USUARIO__idRol__1EA48E88">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO_O__idOpe__2B0A656D" Association="Self.FK__USUARIO_O__idOpe__2B0A656D">
+            <End Role="OPERACIONES" EntitySet="OPERACIONES" />
+            <End Role="USUARIO_OPERACIONES" EntitySet="USUARIO_OPERACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO_O__idRol__2A164134" Association="Self.FK__USUARIO_O__idRol__2A164134">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="USUARIO_OPERACIONES" EntitySet="USUARIO_OPERACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO_O__idUsu__29221CFB" Association="Self.FK__USUARIO_O__idUsu__29221CFB">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="USUARIO_OPERACIONES" EntitySet="USUARIO_OPERACIONES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BONIFICACIONE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" Nullable="false" />
+          <Property Name="idNomina" Type="Int32" Nullable="false" />
+          <Property Name="detalle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="monto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="NOMINA" Relationship="Self.FK__BONIFICAC__idNom__70A8B9AE" FromRole="BONIFICACIONES" ToRole="NOMINA" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__BONIFICAC__idUsu__719CDDE7" FromRole="BONIFICACIONES" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="DEDUCCIONE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" Nullable="false" />
+          <Property Name="idNomina" Type="Int32" Nullable="false" />
+          <Property Name="detalle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="monto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="NOMINA" Relationship="Self.FK__DEDUCCION__idNom__6AEFE058" FromRole="DEDUCCIONES" ToRole="NOMINA" />
+          <NavigationProperty Name="NOMINA1" Relationship="Self.FK__DEDUCCION__idNom__6EC0713C" FromRole="DEDUCCIONES" ToRole="NOMINA" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__DEDUCCION__idUsu__6BE40491" FromRole="DEDUCCIONES" ToRole="USUARIO" />
+          <NavigationProperty Name="USUARIO1" Relationship="Self.FK__DEDUCCION__idUsu__6FB49575" FromRole="DEDUCCIONES" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="DEPARTAMENTO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PUESTOes" Relationship="Self.FK__PUESTO__idDepart__19DFD96B" FromRole="DEPARTAMENTO" ToRole="PUESTO" />
+          <NavigationProperty Name="USUARIOs" Relationship="Self.FK__USUARIO__idDepar__1F98B2C1" FromRole="DEPARTAMENTO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="EVALUACION">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="idPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="notaPromedio" Type="Int32" Nullable="false" />
+          <Property Name="retroalimentacion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="fechaEvaluacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idEvaluador" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__EVALUACIO__idEmp__03BB8E22" FromRole="EVALUACION" ToRole="USUARIO" />
+          <NavigationProperty Name="USUARIO1" Relationship="Self.FK__EVALUACIO__idEva__02C769E9" FromRole="EVALUACION" ToRole="USUARIO" />
+          <NavigationProperty Name="PERIODO" Relationship="Self.FK__EVALUACIO__idPer__01D345B0" FromRole="EVALUACION" ToRole="PERIODO" />
+        </EntityType>
+        <EntityType Name="EVENTO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="informacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="horaEntrada" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="horaSalida" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="METODO_PAGO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="NOMINAs" Relationship="Self.FK__NOMINA__idMetodo__671F4F74" FromRole="METODO_PAGO" ToRole="NOMINA" />
+        </EntityType>
+        <EntityType Name="MODULO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="OPERACIONES" Relationship="Self.FK__OPERACION__idMod__5FB337D6" FromRole="MODULO" ToRole="OPERACIONES" />
+        </EntityType>
+        <EntityType Name="NOMINA">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" Nullable="false" />
+          <Property Name="ano" Type="Int32" Nullable="false" />
+          <Property Name="mes" Type="Int32" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <Property Name="idMetodoPago" Type="Int32" Nullable="false" />
+          <Property Name="salarioBase" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="bonificacionesTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="deduccionesTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="salarioNeto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="comentario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="BONIFICACIONES" Relationship="Self.FK__BONIFICAC__idNom__70A8B9AE" FromRole="NOMINA" ToRole="BONIFICACIONES" />
+          <NavigationProperty Name="DEDUCCIONES" Relationship="Self.FK__DEDUCCION__idNom__6AEFE058" FromRole="NOMINA" ToRole="DEDUCCIONES" />
+          <NavigationProperty Name="DEDUCCIONES1" Relationship="Self.FK__DEDUCCION__idNom__6EC0713C" FromRole="NOMINA" ToRole="DEDUCCIONES" />
+          <NavigationProperty Name="METODO_PAGO" Relationship="Self.FK__NOMINA__idMetodo__671F4F74" FromRole="NOMINA" ToRole="METODO_PAGO" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__NOMINA__idUsuari__681373AD" FromRole="NOMINA" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="OBJETIVO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="idPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="detalle" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="valorReferencia" Type="Int32" Nullable="false" />
+          <Property Name="peso" Type="Int32" Nullable="false" />
+          <Property Name="nota" Type="Int32" Nullable="false" />
+          <Property Name="retroalimentacion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="fechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idEvaluador" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__OBJETIVOS__idEmp__7E02B4CC" FromRole="OBJETIVOS" ToRole="USUARIO" />
+          <NavigationProperty Name="USUARIO1" Relationship="Self.FK__OBJETIVOS__idEva__7EF6D905" FromRole="OBJETIVOS" ToRole="USUARIO" />
+          <NavigationProperty Name="PERIODO" Relationship="Self.FK__OBJETIVOS__idPer__7D0E9093" FromRole="OBJETIVOS" ToRole="PERIODO" />
+        </EntityType>
+        <EntityType Name="OPERACIONE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idModulo" Type="Int32" />
+          <NavigationProperty Name="MODULO" Relationship="Self.FK__OPERACION__idMod__5FB337D6" FromRole="OPERACIONES" ToRole="MODULO" />
+          <NavigationProperty Name="ROL_OPERACION" Relationship="Self.FK__ROL_OPERA__idOpe__656C112C" FromRole="OPERACIONES" ToRole="ROL_OPERACION" />
+          <NavigationProperty Name="USUARIO_OPERACIONES" Relationship="Self.FK__USUARIO_O__idOpe__2B0A656D" FromRole="OPERACIONES" ToRole="USUARIO_OPERACIONES" />
+        </EntityType>
+        <EntityType Name="PERIODO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="detalle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="desde" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="hasta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ano" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EVALUACIONs" Relationship="Self.FK__EVALUACIO__idPer__01D345B0" FromRole="PERIODO" ToRole="EVALUACION" />
+          <NavigationProperty Name="OBJETIVOS" Relationship="Self.FK__OBJETIVOS__idPer__7D0E9093" FromRole="PERIODO" ToRole="OBJETIVOS" />
+        </EntityType>
+        <EntityType Name="PUESTO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idDepartamento" Type="Int32" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DEPARTAMENTO" Relationship="Self.FK__PUESTO__idDepart__19DFD96B" FromRole="PUESTO" ToRole="DEPARTAMENTO" />
+          <NavigationProperty Name="USUARIOs" Relationship="Self.FK__USUARIO__idPuest__208CD6FA" FromRole="PUESTO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ROL_OPERACION" Relationship="Self.FK__ROL_OPERA__idRol__6477ECF3" FromRole="ROL" ToRole="ROL_OPERACION" />
+          <NavigationProperty Name="USUARIOs" Relationship="Self.FK__USUARIO__idRol__1EA48E88" FromRole="ROL" ToRole="USUARIO" />
+          <NavigationProperty Name="USUARIO_OPERACIONES" Relationship="Self.FK__USUARIO_O__idRol__2A164134" FromRole="ROL" ToRole="USUARIO_OPERACIONES" />
+        </EntityType>
+        <EntityType Name="ROL_OPERACION">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idRol" Type="Int32" />
+          <Property Name="idOperacion" Type="Int32" />
+          <NavigationProperty Name="OPERACIONE" Relationship="Self.FK__ROL_OPERA__idOpe__656C112C" FromRole="ROL_OPERACION" ToRole="OPERACIONES" />
+          <NavigationProperty Name="ROL" Relationship="Self.FK__ROL_OPERA__idRol__6477ECF3" FromRole="ROL_OPERACION" ToRole="ROL" />
+        </EntityType>
+        <EntityType Name="TURNO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="dias" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="horaEntrada" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="horaSalida" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idEncargado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__TURNO__idEmplead__0880433F" FromRole="TURNO" ToRole="USUARIO" />
+          <NavigationProperty Name="USUARIO1" Relationship="Self.FK__TURNO__idEncarga__09746778" FromRole="TURNO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contrasena" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idRol" Type="Int32" Nullable="false" />
+          <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefono" Type="Int32" Nullable="false" />
+          <Property Name="fechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="idGenero" Type="Int32" Nullable="false" />
+          <Property Name="nacionalidad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idDepartamento" Type="Int32" Nullable="false" />
+          <Property Name="idPuesto" Type="Int32" Nullable="false" />
+          <Property Name="fechaUnion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="salarioBase" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BONIFICACIONES" Relationship="Self.FK__BONIFICAC__idUsu__719CDDE7" FromRole="USUARIO" ToRole="BONIFICACIONES" />
+          <NavigationProperty Name="DEDUCCIONES" Relationship="Self.FK__DEDUCCION__idUsu__6BE40491" FromRole="USUARIO" ToRole="DEDUCCIONES" />
+          <NavigationProperty Name="DEDUCCIONES1" Relationship="Self.FK__DEDUCCION__idUsu__6FB49575" FromRole="USUARIO" ToRole="DEDUCCIONES" />
+          <NavigationProperty Name="DEPARTAMENTO" Relationship="Self.FK__USUARIO__idDepar__1F98B2C1" FromRole="USUARIO" ToRole="DEPARTAMENTO" />
+          <NavigationProperty Name="EVALUACIONs" Relationship="Self.FK__EVALUACIO__idEmp__03BB8E22" FromRole="USUARIO" ToRole="EVALUACION" />
+          <NavigationProperty Name="EVALUACIONs1" Relationship="Self.FK__EVALUACIO__idEva__02C769E9" FromRole="USUARIO" ToRole="EVALUACION" />
+          <NavigationProperty Name="NOMINAs" Relationship="Self.FK__NOMINA__idUsuari__681373AD" FromRole="USUARIO" ToRole="NOMINA" />
+          <NavigationProperty Name="OBJETIVOS" Relationship="Self.FK__OBJETIVOS__idEmp__7E02B4CC" FromRole="USUARIO" ToRole="OBJETIVOS" />
+          <NavigationProperty Name="OBJETIVOS1" Relationship="Self.FK__OBJETIVOS__idEva__7EF6D905" FromRole="USUARIO" ToRole="OBJETIVOS" />
+          <NavigationProperty Name="PUESTO" Relationship="Self.FK__USUARIO__idPuest__208CD6FA" FromRole="USUARIO" ToRole="PUESTO" />
+          <NavigationProperty Name="ROL" Relationship="Self.FK__USUARIO__idRol__1EA48E88" FromRole="USUARIO" ToRole="ROL" />
+          <NavigationProperty Name="TURNOes" Relationship="Self.FK__TURNO__idEmplead__0880433F" FromRole="USUARIO" ToRole="TURNO" />
+          <NavigationProperty Name="TURNOes1" Relationship="Self.FK__TURNO__idEncarga__09746778" FromRole="USUARIO" ToRole="TURNO" />
+          <NavigationProperty Name="USUARIO_OPERACIONES" Relationship="Self.FK__USUARIO_O__idUsu__29221CFB" FromRole="USUARIO" ToRole="USUARIO_OPERACIONES" />
+        </EntityType>
+        <EntityType Name="USUARIO_OPERACIONES">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" />
+          <Property Name="idRol" Type="Int32" />
+          <Property Name="idOperacion" Type="Int32" />
+          <Property Name="hasIt" Type="Boolean" />
+          <NavigationProperty Name="OPERACIONE" Relationship="Self.FK__USUARIO_O__idOpe__2B0A656D" FromRole="USUARIO_OPERACIONES" ToRole="OPERACIONES" />
+          <NavigationProperty Name="ROL" Relationship="Self.FK__USUARIO_O__idRol__2A164134" FromRole="USUARIO_OPERACIONES" ToRole="ROL" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__USUARIO_O__idUsu__29221CFB" FromRole="USUARIO_OPERACIONES" ToRole="USUARIO" />
+        </EntityType>
+        <Association Name="FK__BONIFICAC__idNom__70A8B9AE">
+          <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="1" />
+          <End Role="BONIFICACIONES" Type="Self.BONIFICACIONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOMINA">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BONIFICACIONES">
+              <PropertyRef Name="idNomina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BONIFICAC__idUsu__719CDDE7">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="BONIFICACIONES" Type="Self.BONIFICACIONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BONIFICACIONES">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DEDUCCION__idNom__6AEFE058">
+          <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="1" />
+          <End Role="DEDUCCIONES" Type="Self.DEDUCCIONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOMINA">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DEDUCCIONES">
+              <PropertyRef Name="idNomina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DEDUCCION__idNom__6EC0713C">
+          <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="1" />
+          <End Role="DEDUCCIONES" Type="Self.DEDUCCIONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOMINA">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DEDUCCIONES">
+              <PropertyRef Name="idNomina" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DEDUCCION__idUsu__6BE40491">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="DEDUCCIONES" Type="Self.DEDUCCIONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DEDUCCIONES">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DEDUCCION__idUsu__6FB49575">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="DEDUCCIONES" Type="Self.DEDUCCIONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DEDUCCIONES">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PUESTO__idDepart__19DFD96B">
+          <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="0..1" />
+          <End Role="PUESTO" Type="Self.PUESTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTAMENTO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PUESTO">
+              <PropertyRef Name="idDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO__idDepar__1F98B2C1">
+          <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTAMENTO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="idDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EVALUACIO__idEmp__03BB8E22">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EVALUACION">
+              <PropertyRef Name="idEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EVALUACIO__idEva__02C769E9">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EVALUACION">
+              <PropertyRef Name="idEvaluador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EVALUACIO__idPer__01D345B0">
+          <End Role="PERIODO" Type="Self.PERIODO" Multiplicity="1" />
+          <End Role="EVALUACION" Type="Self.EVALUACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERIODO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EVALUACION">
+              <PropertyRef Name="idPeriodo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NOMINA__idMetodo__671F4F74">
+          <End Role="METODO_PAGO" Type="Self.METODO_PAGO" Multiplicity="1" />
+          <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="METODO_PAGO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="NOMINA">
+              <PropertyRef Name="idMetodoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OPERACION__idMod__5FB337D6">
+          <End Role="MODULO" Type="Self.MODULO" Multiplicity="0..1" />
+          <End Role="OPERACIONES" Type="Self.OPERACIONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MODULO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OPERACIONES">
+              <PropertyRef Name="idModulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NOMINA__idUsuari__681373AD">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="NOMINA" Type="Self.NOMINA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="NOMINA">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OBJETIVOS__idEmp__7E02B4CC">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="OBJETIVOS" Type="Self.OBJETIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OBJETIVOS">
+              <PropertyRef Name="idEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OBJETIVOS__idEva__7EF6D905">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="OBJETIVOS" Type="Self.OBJETIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OBJETIVOS">
+              <PropertyRef Name="idEvaluador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OBJETIVOS__idPer__7D0E9093">
+          <End Role="PERIODO" Type="Self.PERIODO" Multiplicity="1" />
+          <End Role="OBJETIVOS" Type="Self.OBJETIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERIODO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OBJETIVOS">
+              <PropertyRef Name="idPeriodo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ROL_OPERA__idOpe__656C112C">
+          <End Role="OPERACIONES" Type="Self.OPERACIONE" Multiplicity="0..1" />
+          <End Role="ROL_OPERACION" Type="Self.ROL_OPERACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OPERACIONES">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ROL_OPERACION">
+              <PropertyRef Name="idOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO_O__idOpe__2B0A656D">
+          <End Role="OPERACIONES" Type="Self.OPERACIONE" Multiplicity="0..1" />
+          <End Role="USUARIO_OPERACIONES" Type="Self.USUARIO_OPERACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OPERACIONES">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIO_OPERACIONES">
+              <PropertyRef Name="idOperacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO__idPuest__208CD6FA">
+          <End Role="PUESTO" Type="Self.PUESTO" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PUESTO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="idPuesto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ROL_OPERA__idRol__6477ECF3">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="0..1" />
+          <End Role="ROL_OPERACION" Type="Self.ROL_OPERACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ROL_OPERACION">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO__idRol__1EA48E88">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO_O__idRol__2A164134">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="0..1" />
+          <End Role="USUARIO_OPERACIONES" Type="Self.USUARIO_OPERACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIO_OPERACIONES">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TURNO__idEmplead__0880433F">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="TURNO" Type="Self.TURNO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TURNO">
+              <PropertyRef Name="idEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TURNO__idEncarga__09746778">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="TURNO" Type="Self.TURNO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="TURNO">
+              <PropertyRef Name="idEncargado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO_O__idUsu__29221CFB">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="USUARIO_OPERACIONES" Type="Self.USUARIO_OPERACIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="USUARIO_OPERACIONES">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BONIFICACIONES" EntityType="Self.BONIFICACIONE" />
+          <EntitySet Name="DEDUCCIONES" EntityType="Self.DEDUCCIONE" />
+          <EntitySet Name="DEPARTAMENTOes" EntityType="Self.DEPARTAMENTO" />
+          <EntitySet Name="EVALUACIONs" EntityType="Self.EVALUACION" />
+          <EntitySet Name="EVENTOes" EntityType="Self.EVENTO" />
+          <EntitySet Name="METODO_PAGO" EntityType="Self.METODO_PAGO" />
+          <EntitySet Name="MODULOes" EntityType="Self.MODULO" />
+          <EntitySet Name="NOMINAs" EntityType="Self.NOMINA" />
+          <EntitySet Name="OBJETIVOS" EntityType="Self.OBJETIVO" />
+          <EntitySet Name="OPERACIONES" EntityType="Self.OPERACIONE" />
+          <EntitySet Name="PERIODOes" EntityType="Self.PERIODO" />
+          <EntitySet Name="PUESTOes" EntityType="Self.PUESTO" />
+          <EntitySet Name="ROLs" EntityType="Self.ROL" />
+          <EntitySet Name="ROL_OPERACION" EntityType="Self.ROL_OPERACION" />
+          <EntitySet Name="TURNOes" EntityType="Self.TURNO" />
+          <EntitySet Name="USUARIOs" EntityType="Self.USUARIO" />
+          <EntitySet Name="USUARIO_OPERACIONES" EntityType="Self.USUARIO_OPERACIONES" />
+          <AssociationSet Name="FK__BONIFICAC__idNom__70A8B9AE" Association="Self.FK__BONIFICAC__idNom__70A8B9AE">
+            <End Role="NOMINA" EntitySet="NOMINAs" />
+            <End Role="BONIFICACIONES" EntitySet="BONIFICACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BONIFICAC__idUsu__719CDDE7" Association="Self.FK__BONIFICAC__idUsu__719CDDE7">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="BONIFICACIONES" EntitySet="BONIFICACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DEDUCCION__idNom__6AEFE058" Association="Self.FK__DEDUCCION__idNom__6AEFE058">
+            <End Role="NOMINA" EntitySet="NOMINAs" />
+            <End Role="DEDUCCIONES" EntitySet="DEDUCCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DEDUCCION__idNom__6EC0713C" Association="Self.FK__DEDUCCION__idNom__6EC0713C">
+            <End Role="NOMINA" EntitySet="NOMINAs" />
+            <End Role="DEDUCCIONES" EntitySet="DEDUCCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DEDUCCION__idUsu__6BE40491" Association="Self.FK__DEDUCCION__idUsu__6BE40491">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="DEDUCCIONES" EntitySet="DEDUCCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DEDUCCION__idUsu__6FB49575" Association="Self.FK__DEDUCCION__idUsu__6FB49575">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="DEDUCCIONES" EntitySet="DEDUCCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PUESTO__idDepart__19DFD96B" Association="Self.FK__PUESTO__idDepart__19DFD96B">
+            <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTOes" />
+            <End Role="PUESTO" EntitySet="PUESTOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO__idDepar__1F98B2C1" Association="Self.FK__USUARIO__idDepar__1F98B2C1">
+            <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTOes" />
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EVALUACIO__idEmp__03BB8E22" Association="Self.FK__EVALUACIO__idEmp__03BB8E22">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="EVALUACION" EntitySet="EVALUACIONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EVALUACIO__idEva__02C769E9" Association="Self.FK__EVALUACIO__idEva__02C769E9">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="EVALUACION" EntitySet="EVALUACIONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EVALUACIO__idPer__01D345B0" Association="Self.FK__EVALUACIO__idPer__01D345B0">
+            <End Role="PERIODO" EntitySet="PERIODOes" />
+            <End Role="EVALUACION" EntitySet="EVALUACIONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NOMINA__idMetodo__671F4F74" Association="Self.FK__NOMINA__idMetodo__671F4F74">
+            <End Role="METODO_PAGO" EntitySet="METODO_PAGO" />
+            <End Role="NOMINA" EntitySet="NOMINAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OPERACION__idMod__5FB337D6" Association="Self.FK__OPERACION__idMod__5FB337D6">
+            <End Role="MODULO" EntitySet="MODULOes" />
+            <End Role="OPERACIONES" EntitySet="OPERACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NOMINA__idUsuari__681373AD" Association="Self.FK__NOMINA__idUsuari__681373AD">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="NOMINA" EntitySet="NOMINAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OBJETIVOS__idEmp__7E02B4CC" Association="Self.FK__OBJETIVOS__idEmp__7E02B4CC">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="OBJETIVOS" EntitySet="OBJETIVOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OBJETIVOS__idEva__7EF6D905" Association="Self.FK__OBJETIVOS__idEva__7EF6D905">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="OBJETIVOS" EntitySet="OBJETIVOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OBJETIVOS__idPer__7D0E9093" Association="Self.FK__OBJETIVOS__idPer__7D0E9093">
+            <End Role="PERIODO" EntitySet="PERIODOes" />
+            <End Role="OBJETIVOS" EntitySet="OBJETIVOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROL_OPERA__idOpe__656C112C" Association="Self.FK__ROL_OPERA__idOpe__656C112C">
+            <End Role="OPERACIONES" EntitySet="OPERACIONES" />
+            <End Role="ROL_OPERACION" EntitySet="ROL_OPERACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO_O__idOpe__2B0A656D" Association="Self.FK__USUARIO_O__idOpe__2B0A656D">
+            <End Role="OPERACIONES" EntitySet="OPERACIONES" />
+            <End Role="USUARIO_OPERACIONES" EntitySet="USUARIO_OPERACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO__idPuest__208CD6FA" Association="Self.FK__USUARIO__idPuest__208CD6FA">
+            <End Role="PUESTO" EntitySet="PUESTOes" />
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROL_OPERA__idRol__6477ECF3" Association="Self.FK__ROL_OPERA__idRol__6477ECF3">
+            <End Role="ROL" EntitySet="ROLs" />
+            <End Role="ROL_OPERACION" EntitySet="ROL_OPERACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO__idRol__1EA48E88" Association="Self.FK__USUARIO__idRol__1EA48E88">
+            <End Role="ROL" EntitySet="ROLs" />
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO_O__idRol__2A164134" Association="Self.FK__USUARIO_O__idRol__2A164134">
+            <End Role="ROL" EntitySet="ROLs" />
+            <End Role="USUARIO_OPERACIONES" EntitySet="USUARIO_OPERACIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TURNO__idEmplead__0880433F" Association="Self.FK__TURNO__idEmplead__0880433F">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="TURNO" EntitySet="TURNOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TURNO__idEncarga__09746778" Association="Self.FK__TURNO__idEncarga__09746778">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="TURNO" EntitySet="TURNOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO_O__idUsu__29221CFB" Association="Self.FK__USUARIO_O__idUsu__29221CFB">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="USUARIO_OPERACIONES" EntitySet="USUARIO_OPERACIONES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="BONIFICACIONES">
+            <EntityTypeMapping TypeName="Model.BONIFICACIONE">
+              <MappingFragment StoreEntitySet="BONIFICACIONES">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idNomina" ColumnName="idNomina" />
+                <ScalarProperty Name="detalle" ColumnName="detalle" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEDUCCIONES">
+            <EntityTypeMapping TypeName="Model.DEDUCCIONE">
+              <MappingFragment StoreEntitySet="DEDUCCIONES">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idNomina" ColumnName="idNomina" />
+                <ScalarProperty Name="detalle" ColumnName="detalle" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEPARTAMENTOes">
+            <EntityTypeMapping TypeName="Model.DEPARTAMENTO">
+              <MappingFragment StoreEntitySet="DEPARTAMENTO">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EVALUACIONs">
+            <EntityTypeMapping TypeName="Model.EVALUACION">
+              <MappingFragment StoreEntitySet="EVALUACION">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idEmpleado" ColumnName="idEmpleado" />
+                <ScalarProperty Name="idPeriodo" ColumnName="idPeriodo" />
+                <ScalarProperty Name="notaPromedio" ColumnName="notaPromedio" />
+                <ScalarProperty Name="retroalimentacion" ColumnName="retroalimentacion" />
+                <ScalarProperty Name="fechaEvaluacion" ColumnName="fechaEvaluacion" />
+                <ScalarProperty Name="idEvaluador" ColumnName="idEvaluador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EVENTOes">
+            <EntityTypeMapping TypeName="Model.EVENTO">
+              <MappingFragment StoreEntitySet="EVENTO">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="informacion" ColumnName="informacion" />
+                <ScalarProperty Name="horaEntrada" ColumnName="horaEntrada" />
+                <ScalarProperty Name="horaSalida" ColumnName="horaSalida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="METODO_PAGO">
+            <EntityTypeMapping TypeName="Model.METODO_PAGO">
+              <MappingFragment StoreEntitySet="METODO_PAGO">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MODULOes">
+            <EntityTypeMapping TypeName="Model.MODULO">
+              <MappingFragment StoreEntitySet="MODULO">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NOMINAs">
+            <EntityTypeMapping TypeName="Model.NOMINA">
+              <MappingFragment StoreEntitySet="NOMINA">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="ano" ColumnName="ano" />
+                <ScalarProperty Name="mes" ColumnName="mes" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="idMetodoPago" ColumnName="idMetodoPago" />
+                <ScalarProperty Name="salarioBase" ColumnName="salarioBase" />
+                <ScalarProperty Name="bonificacionesTotal" ColumnName="bonificacionesTotal" />
+                <ScalarProperty Name="deduccionesTotal" ColumnName="deduccionesTotal" />
+                <ScalarProperty Name="salarioNeto" ColumnName="salarioNeto" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OBJETIVOS">
+            <EntityTypeMapping TypeName="Model.OBJETIVO">
+              <MappingFragment StoreEntitySet="OBJETIVOS">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idEmpleado" ColumnName="idEmpleado" />
+                <ScalarProperty Name="idPeriodo" ColumnName="idPeriodo" />
+                <ScalarProperty Name="detalle" ColumnName="detalle" />
+                <ScalarProperty Name="valorReferencia" ColumnName="valorReferencia" />
+                <ScalarProperty Name="peso" ColumnName="peso" />
+                <ScalarProperty Name="nota" ColumnName="nota" />
+                <ScalarProperty Name="retroalimentacion" ColumnName="retroalimentacion" />
+                <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
+                <ScalarProperty Name="idEvaluador" ColumnName="idEvaluador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OPERACIONES">
+            <EntityTypeMapping TypeName="Model.OPERACIONE">
+              <MappingFragment StoreEntitySet="OPERACIONES">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idModulo" ColumnName="idModulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERIODOes">
+            <EntityTypeMapping TypeName="Model.PERIODO">
+              <MappingFragment StoreEntitySet="PERIODO">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="detalle" ColumnName="detalle" />
+                <ScalarProperty Name="desde" ColumnName="desde" />
+                <ScalarProperty Name="hasta" ColumnName="hasta" />
+                <ScalarProperty Name="ano" ColumnName="ano" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PUESTOes">
+            <EntityTypeMapping TypeName="Model.PUESTO">
+              <MappingFragment StoreEntitySet="PUESTO">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idDepartamento" ColumnName="idDepartamento" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLs">
+            <EntityTypeMapping TypeName="Model.ROL">
+              <MappingFragment StoreEntitySet="ROL">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROL_OPERACION">
+            <EntityTypeMapping TypeName="Model.ROL_OPERACION">
+              <MappingFragment StoreEntitySet="ROL_OPERACION">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="idOperacion" ColumnName="idOperacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TURNOes">
+            <EntityTypeMapping TypeName="Model.TURNO">
+              <MappingFragment StoreEntitySet="TURNO">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idEmpleado" ColumnName="idEmpleado" />
+                <ScalarProperty Name="dias" ColumnName="dias" />
+                <ScalarProperty Name="horaEntrada" ColumnName="horaEntrada" />
+                <ScalarProperty Name="horaSalida" ColumnName="horaSalida" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="idEncargado" ColumnName="idEncargado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIOs">
+            <EntityTypeMapping TypeName="Model.USUARIO">
+              <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+                <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="idGenero" ColumnName="idGenero" />
+                <ScalarProperty Name="nacionalidad" ColumnName="nacionalidad" />
+                <ScalarProperty Name="idDepartamento" ColumnName="idDepartamento" />
+                <ScalarProperty Name="idPuesto" ColumnName="idPuesto" />
+                <ScalarProperty Name="fechaUnion" ColumnName="fechaUnion" />
+                <ScalarProperty Name="salarioBase" ColumnName="salarioBase" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIO_OPERACIONES">
+            <EntityTypeMapping TypeName="Model.USUARIO_OPERACIONES">
+              <MappingFragment StoreEntitySet="USUARIO_OPERACIONES">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="idOperacion" ColumnName="idOperacion" />
+                <ScalarProperty Name="hasIt" ColumnName="hasIt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

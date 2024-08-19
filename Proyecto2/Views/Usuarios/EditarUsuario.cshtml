@@ -1,0 +1,216 @@
+﻿@model Proyecto2.Models.USUARIO
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Editar usuario</h3>
+            <br />
+            <form action="@Url.Action("ModificarUsuario", "Usuarios")" method="post">
+                <div class="row">
+                    <div class="col">
+                        <!-- Detalles personales del empleado-->
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Detalles personales</h5>
+                                <hr />
+
+                                <div class="mb-3">
+                                    <label for="inputNombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="inputNombre" name="nombre" value="@Html.DisplayFor(Model => Model.nombre)">
+                                    <input type="hidden" class="form-control" id="inputId" name="id" value="@Html.DisplayFor(Model => Model.id)">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputApellido" class="form-label">Apellido</label>
+                                    <input type="text" class="form-control" id="inputApellido" name="apellido" value="@Html.DisplayFor(Model => Model.apellido)">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputFechaNacimiento" class="form-label">Fecha de nacimiento</label>
+                                    <input type="date" class="form-control" id="inputFechaNacimiento" name="fechaNacimiento" value="@Html.Raw(Model.fechaNacimiento.ToString("yyyy-MM-dd"))">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputContrasena" class="form-label">Género</label>
+                                    @Html.DropDownListFor(x => x.idGenero, new SelectList((List<Proyecto2.Models.Genero>)ViewBag.GeneroList, "id", "nombre"), new { @class = "form-select" })
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputTelefono" class="form-label">Teléfono</label>
+                                    <input type="number" class="form-control" id="inputTelefono" name="telefono" value="@Html.DisplayFor(Model => Model.telefono)">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputDireccion" class="form-label">Dirección</label>
+                                    <input type="text" class="form-control" id="inputDireccion" name="direccion" value="@Html.DisplayFor(Model => Model.direccion)">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputNacionalidad" class="form-label">Nacionalidad</label>
+                                    <input type="text" class="form-control" id="inputNacionalidad" name="nacionalidad" value="@Html.DisplayFor(Model => Model.nacionalidad)">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <!-- Detalles de inicio sesión del empleado-->
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Detalles inicio sesión</h5>
+                                <hr />
+
+                                <div class="mb-3">
+                                    <label for="inputEmail" class="form-label">Correo electrónico</label>
+                                    <input type="email" class="form-control" id="inputEmail" name="email" value="@Html.DisplayFor(Model => Model.email)">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputContrasena" class="form-label">Contraseña temporal</label>
+                                    <input type="text" class="form-control" id="inputContrasena" name="contrasena" value="@Html.DisplayFor(Model => Model.contrasena)">
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Detalles relacionados a la compañia-->
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Detalles de compañía</h5>
+                                <hr />
+
+                                <div class="mb-3">
+                                    <label for="inputDepartamento" class="form-label">Departamento</label>
+                                    @Html.DropDownListFor(x => x.idDepartamento, new SelectList((List<Proyecto2.Models.DEPARTAMENTO>)ViewBag.DepartamentosList, "id", "nombre"), new { @class = "form-select" })
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputPuesto" class="form-label">Puesto</label>
+                                    @Html.DropDownListFor(x => x.idPuesto, new SelectList((List<Proyecto2.Models.PUESTO>)ViewBag.PuestosList, "id", "nombre"), new { @class = "form-select" })
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="inputFechaUnion" class="form-label">Fecha de unión</label>
+                                    <input type="date" class="form-control" id="inputFechaUnion" name="fechaUnion" value="@Html.Raw(Model.fechaUnion.ToString("yyyy-MM-dd"))">
+                                </div>
+
+                                @if ((string)ViewBag.Has4Rol == "Y")
+                                {
+                                    <div class="mb-3">
+                                        <label for="inputRol" class="form-label">Rol</label>
+                                        @Html.DropDownListFor(x => x.idRol, new SelectList((List<Proyecto2.Models.ROL>)ViewBag.RolesList, "id", "nombre"), new { @class = "form-select" })
+                                    </div>
+                                }
+
+                                @if ((string)ViewBag.Has5Rol == "Y")
+                                {
+                                    <div class="mb-3">
+                                        <label for="inputRol" class="form-label">Operaciones</label>
+                                        <br />
+                                        @foreach (var item in (List<Proyecto2.Models.OperacionesMdl>)ViewBag.OperacionesList)
+                                        {
+                                            var count = ((List<Proyecto2.Models.USUARIO_OPERACIONES>)ViewBag.UsuarioOperacionesList).Count;
+                                            var i = 0;
+
+                                            foreach (var usuarioOperacion in (List<Proyecto2.Models.USUARIO_OPERACIONES>)ViewBag.UsuarioOperacionesList)
+                                            {
+                                                if (usuarioOperacion.idOperacion == item.idOperacion)
+                                                {
+                                                    @Html.CheckBoxFor(m => usuarioOperacion.hasIt.Value, new { value = item.idOperacion, id = "chk_" + @item.idOperacion, @checked = "checked", Name = "operaciones_chks" })
+                                                    @Html.Raw(" ");
+                                                    @Html.DisplayFor(m => item.nombreOperacion, new { @class = "ml-1" });
+                                                    break;
+                                                }
+                                                else if (i == count - 1)
+                                                {
+                                                    @Html.CheckBoxFor(m => item.selected, new { value = item.idOperacion, id = "chk_" + @item.idOperacion, @checked = "checked", Name = "operaciones_chks" })
+                                                    @Html.Raw(" ");
+                                                    @Html.DisplayFor(m => item.nombreOperacion, new { @class = "ml-1" });
+                                                    break;
+                                                }
+                                                i++;
+
+                                            }
+
+                                            <br />
+                                        }
+                                        <br />
+                                    </div>
+                                }
+                                
+                                <div class="mb-3">
+                                    <label for="inputSalarioBase" class="form-label">Salario base</label>
+                                    <input type="number" class="form-control" id="inputSalarioBase" name="salarioBase" value="@Html.DisplayFor(Model => Model.salarioBase)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <button class="btn btn-primary w-100 py-2" type="submit">Modificar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='@Url.Action("GestionUsuarios", "Usuarios")'">Regresar</button>
+
+
+@section scripts{
+    <script>
+
+        function ListarDepartamento() {
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idDepartamento")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerDepartamentos", "Usuarios")',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.nombre).appendTo("#idDepartamento")
+                        })
+
+                        ListarPuestos();
+                    }
+                }
+            })
+        }
+
+        $("#idDepartamento").on("change", function () {
+            ListarPuestos();
+        })
+
+        function ListarPuestos() {
+
+            $('#idPuesto option').each(function () {
+                $(this).remove();
+            });
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idPuesto")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerPuestos", "Usuarios")',
+                type: "POST",
+                data: JSON.stringify({ idDepartamento: $("#idDepartamento option:selected").val()}),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.nombre).appendTo("#idPuesto")
+                        })
+                    }
+                }
+            })
+        }
+
+    </script>
+
+
+}

@@ -1,0 +1,251 @@
+﻿<div class="card">
+    <div class="card-header">
+        <h3>Registro de evaluación</h3>
+    </div>
+    <div class="card-body">
+        <form action="@Url.Action("EvaluarEmpleado", "Rendimientos")" method="post">
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="idDepartamento" class="form-label">Departamento</label>
+                        <select class="form-select" name="idDepartamento" id="idDepartamento"></select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="idEmpleado" class="form-label">Empleado</label>
+                        <select class="form-select" name="idEmpleado" id="idEmpleado"></select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="idPeriodo" class="form-label">Periodo</label>
+                        <select class="form-select" name="idPeriodo" id="idPeriodo"></select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mt-4">
+                        <button type="button" class="btn btn-primary" id="btnSeleccionar" onclick="javascript:fn_mostrarObjetivos();">Seleccionar</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" id="objMainCard" style="display:none;">
+                <div class="card-header">
+                    <h5>Objetivos a evaluar</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Detalle</th>
+                                <th>Valor referencia</th>
+                                <th>Peso</th>
+                                <th>Nota obtenida</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableObjetivos"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            ListarDepartamentos();
+
+            if (!checkAllSelect()) {
+                $("#btnSeleccionar").attr("disabled", true);
+            }
+
+        })
+
+        $("#idEmpleado").on("change", function () {
+
+            ListarPeriodos();
+
+            if (checkAllSelect()) {
+                $("#btnSeleccionar").removeAttr("disabled");
+            }
+
+        })
+
+        $("#idPeriodo").on("change", function () {
+
+            if (checkAllSelect()) {
+                $("#btnSeleccionar").removeAttr("disabled");
+            }
+
+        })
+
+        $("#idDepartamento").on("change", function () {
+            ListarEmpleados();
+
+            if (checkAllSelect()) {
+                $("#btnSeleccionar").removeAttr("disabled");
+            }
+
+        })
+
+
+        function ListarDepartamentos() {
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idDepartamento")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerDepartamentos", "Rendimientos")',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.nombre).appendTo("#idDepartamento")
+                        })
+
+                        ListarEmpleados();
+                    }
+                }
+            })
+        }
+
+        function ListarEmpleados() {
+
+            $("#idEmpleado option").remove();
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idEmpleado")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerEmpleadosPorDepartamento", "Rendimientos")',
+                type: "POST",
+                data: JSON.stringify({ idDepartamento: $("#idDepartamento option:selected").val()}),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.nombre + " " + item.apellido).appendTo("#idEmpleado")
+                        })
+                    }
+                }
+            })
+        }
+
+        function checkAllSelect() {
+            if ($('#idDepartamento option:selected:not([disabled])').length > 0 &&
+                $('#idEmpleado option:selected:not([disabled])').length > 0 &&
+                $('#idPeriodo option:selected:not([disabled])').length > 0 ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function ListarPeriodos() {
+
+            $("#idPeriodo option").remove();
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idPeriodo")
+
+            jQuery.ajax({
+                url: '@Url.Action("ListarPeriodos", "Rendimientos")',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.detalle).appendTo("#idPeriodo")
+                        })
+                    }
+                }
+            })
+        }
+
+        function ListarObjetivos() {
+
+            jQuery.ajax({
+                url: '@Url.Action("ListarObjetivos", "Rendimientos")',
+                type: "POST",
+                data: JSON.stringify({ idEmpleado: $("#idEmpleado option:selected").val(), idPeriodo: $("#idPeriodo option:selected").val() }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null && data.lista.length > 0) {
+                        $('#objMainCard').show();
+                        $('#tableObjetivos tr').remove();
+
+                        $.each(data.lista, function (i, item) {
+                            $('#tableObjetivos').append(
+                                $('<tr>').append(
+                                    $('<td>').append(
+                                        $('<span>').text(item.id)
+                                    ),
+                                    $('<td>').append(
+                                        $('<span>').text(item.detalle)
+                                    ),
+                                    $('<td>').append(
+                                        $('<span>').text(item.valorReferencia)
+                                    ),
+                                    $('<td>').append(
+                                        $('<span>').text(item.peso)
+                                    ),
+                                    $('<td>').append(
+                                        $('<input>').addClass("form-control").attr({ name: "notaObtenida", id: "nota_" + item.id }).prop("type", "number").val(item.nota)
+                                    ),
+                                )
+                            )
+                        })
+
+                        $('#tableObjetivos').append(
+                            $('<tr>').append(
+                                $('<td>').prop("colspan", "5").append(
+                                    $('<label>').prop("for", "retroalimentacion").addClass("form-label").text("Retroalimentación"),
+                                    $('<textarea>').addClass("form-control").attr({ name: "retroalimentacion", id: "retroalimentacion" })
+                                )
+                            )
+                        ),
+
+                            $('#tableObjetivos').append(
+                                $('<tr>').append(
+                                    $('<td>').prop("colspan", "5").append(
+                                        $("<button>").addClass("btn btn-success btn-evaluar float-end").text("Evaluar").prop("type", "submit")
+                                    )
+                                )
+                            )
+
+                    } else {
+                        $('#objMainCard').show();
+                        $('#tableObjetivos tr').remove();
+
+                        $('#tableObjetivos').append(
+                            $('<tr>').append(
+                                $('<td>').prop("colspan", "5").addClass("text-center").append(
+                                    $('<span>').text("No hay objetivos registrados.")
+                                )
+                            )
+                        )
+                    }
+
+                }
+            })
+        }
+
+        function fn_mostrarObjetivos() {
+            ListarObjetivos();
+        }
+
+
+    </script>
+}

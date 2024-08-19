@@ -1,0 +1,89 @@
+﻿@model Proyecto2.Models.USUARIO
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Detalles usuario</h5>
+            <hr />
+
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Información básica</h5>
+                            <hr />
+                            <p><b>Nombre completo: </b>@Html.DisplayFor(Model => Model.nombre) @Html.DisplayFor(Model => Model.apellido)</p>
+                            <p><b>Fecha de nacimiento: </b>@Html.DisplayFor(Model => Model.fechaNacimiento)</p>
+                            <p><b>Género: </b> @if (Model.idGenero == 1)
+                            {<span>Femenino</span> }
+                            else
+                            { <span>Masculino</span>} </p>
+                            <p><b>Teléfono: </b>@Html.DisplayFor(Model => Model.telefono)</p>
+                            <p><b>Dirección: </b>@Html.DisplayFor(Model => Model.direccion)</p>
+                            <p><b>Nacionalidad: </b>@Html.DisplayFor(Model => Model.nacionalidad)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Detalles inicio sesión</h5>
+                            <hr />
+                            <p><b>Correo electrónico: </b>@Html.DisplayFor(Model => Model.email)</p>
+                            <p><b>Contraseña temporal: </b>@Html.DisplayFor(Model => Model.contrasena)</p>
+                            <p><b>Fecha de creación: </b>@Html.DisplayFor(Model => Model.fechaCreacion)</p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Detalles de compañía</h5>
+                            <hr />
+                            <p><b>Departamento: </b>@Html.DisplayFor(Model => Model.DEPARTAMENTO.nombre)</p>
+                            <p><b>Puesto: </b>@Html.DisplayFor(Model => Model.PUESTO.nombre)</p>
+                            <p><b>Fecha de unión: </b>@Html.DisplayFor(Model => Model.fechaUnion)</p>
+                            <p><b>Rol asignado: </b>@Html.DisplayFor(Model => Model.ROL.nombre)</p>
+
+                            <div class="mb-3">
+                                <label for="inputRol" class="form-label"><b>Operaciones:</b></label>
+                                <br />
+                                @foreach (var item in (List<Proyecto2.Models.OperacionesMdl>)ViewBag.OperacionesGeneral)
+                                {
+                                    var count = ((List<Proyecto2.Models.USUARIO_OPERACIONES>)ViewBag.OperacionesUsuarioList).Count;
+                                    var i = 0;
+
+                                    foreach (var usuarioOperacion in (List<Proyecto2.Models.USUARIO_OPERACIONES>)ViewBag.OperacionesUsuarioList)
+                                    {
+                                        if (usuarioOperacion.idOperacion == item.idOperacion)
+                                        {
+                                            @Html.CheckBoxFor(m => usuarioOperacion.hasIt.Value, new { value = item.idOperacion, id = "chk_" + @item.idOperacion, @checked = "checked", Name = "operaciones_chks", disabled = "disabled" })
+                                            @Html.Raw(" ");
+                                            @Html.DisplayFor(m => item.nombreOperacion, new { @class = "ml-1" });
+                                            break;
+                                        }
+                                        else if (i == count - 1)
+                                        {
+                                            @Html.CheckBoxFor(m => item.selected, new { value = item.idOperacion, id = "chk_" + @item.idOperacion, @checked = "checked", Name = "operaciones_chks", disabled = "disabled" })
+                                            @Html.Raw(" ");
+                                            @Html.DisplayFor(m => item.nombreOperacion, new { @class = "ml-1" });
+                                            break;
+                                        }
+                                        i++;
+
+                                    }
+
+                                    <br />
+                                }
+                                <br />
+                            </div>
+
+                            <p><b>Salario base: </b>@Html.DisplayFor(Model => Model.salarioBase)</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='@Url.Action("GestionUsuarios", "Usuarios")'">Regresar</button>
+        </div>
+    </div>
+</div>

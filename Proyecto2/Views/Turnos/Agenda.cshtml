@@ -1,0 +1,73 @@
+﻿<div class="card">
+    <div class="card-header">
+        <h3>Agenda</h3>
+    </div>
+    <div class="card-body">
+        <div id='calendar'></div>
+    </div>
+</div>
+
+<div id="myPopup" class="modal fade modal-CreateEvent" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+
+            <div class="modal-body">
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const calendarEl = document.getElementById('calendar');
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+
+            events: function (info, successCallback, failureCallback) {
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "@Url.Action("GetEventData", "Turnos")",
+                    dataType: "JSON",
+                    success: function (data) {
+                        var events = [];
+                        $.each(data, function (i, data) {
+                            events.push({
+                                title: data.nombre,
+                                description: data.informacion,
+                                start: moment(data.horaEntrada).format("YYYY-MM-DD HH:mm:ss"),
+                                end: moment(data.horaSalida).format("YYYY-MM-DD HH:mm:ss"),
+                                id: data.id
+                            });
+                        });
+                        successCallback(events);
+                    }
+                })
+            },
+
+        })
+        calendar.render();
+
+    });
+
+    function showModal(title, body, isEventDetail) {
+        $('#MyPopup .modal-title').html(title);
+    }
+
+</script>

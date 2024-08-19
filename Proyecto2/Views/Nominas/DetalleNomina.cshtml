@@ -1,0 +1,144 @@
+﻿@model Proyecto2.Models.NOMINA
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <div class="container mb-5 mt-3">
+                <div class="row d-flex align-items-baseline">
+                    <div class="col-xl-9">
+                        <p style="color: #7e8d9f;font-size: 20px;">Nómina >> <strong>ID: #@Html.DisplayFor(model => model.id)</strong></p>
+                    </div>
+                    <div class="col-xl-3 float-end">
+                        <a data-mdb-ripple-init class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark" onclick="window.print()">
+                            <i class="fas fa-print text-primary"></i> Imprimir
+                        </a>
+                    </div>
+                    <hr>
+                </div>
+
+                <div class="container">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
+                            <p class="pt-0">Nombre de empresa</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-8">
+                            <ul class="list-unstyled">
+                                <li class="text-muted">Empleado: <span style="color:#5d9fc5 ;">@Html.DisplayFor(model => model.USUARIO.nombre) @Html.DisplayFor(model => model.USUARIO.apellido)</span></li>
+                                <li class="text-muted">
+                                    Mes: <span style="color:#5d9fc5 ;">
+                                        @if (Model.mes == 1)
+                                        {<span>Enero</span> }
+                                        else if (Model.mes == 2)
+                                        { <span>Febrero</span> }
+                                        else if (Model.mes == 3)
+                                        { <span>Marzo</span> }
+                                        else if (Model.mes == 4)
+                                        { <span>Abril</span> }
+                                        else if (Model.mes == 5)
+                                        { <span>Mayo</span> }
+                                        else if (Model.mes == 6)
+                                        { <span>Junio</span> }
+                                        else if (Model.mes == 7)
+                                        { <span>Julio</span> }
+                                        else if (Model.mes == 8)
+                                        { <span>Agosto</span> }
+                                        else if (Model.mes == 9)
+                                        { <span>Setiembre</span> }
+                                        else if (Model.mes == 10)
+                                        { <span>Octubre</span> }
+                                        else if (Model.mes == 11)
+                                        { <span>Noviembre</span> }
+                                        else if (Model.mes == 12)
+                                        { <span>Diciembre</span>}
+                                    </span>
+                                </li>
+                                <li class="text-muted">Año: <span style="color:#5d9fc5 ;">@Html.DisplayFor(model => model.ano)</span></li>
+                            </ul>
+                        </div>
+                        <div class="col-xl-4">
+                            <p class="text-muted">Recibo de pago</p>
+                            <ul class="list-unstyled">
+                                <li class="text-muted">
+                                    <i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">ID:</span> #@Html.DisplayFor(model => model.id)
+                                </li>
+                                <li class="text-muted">
+                                    <i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">Fecha de creación: </span>@Html.DisplayFor(model => model.fechaRegistro)
+                                </li>
+                                <li class="text-muted">
+                                    <i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="me-1 fw-bold">Estado:</span><span class="badge bg-warning text-black fw-bold">
+                                        Pagado
+                                    </span>
+                                </li>
+                                <li class="text-muted">
+                                    <i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">Método de pago: </span>@Html.DisplayFor(model => model.METODO_PAGO.nombre)
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row my-2 mx-1 justify-content-center">
+                        <table class="table table-striped table-borderless">
+                            <thead style="background-color:#84B0CA ;" class="text-white">
+                                <tr>
+                                    <th scope="col">Detalle</th>
+                                    <th scope="col">Monto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Salario base</td>
+                                    <td>₡ @Html.DisplayFor(model => model.salarioBase)</td>
+                                </tr>
+                                @if ((List<Proyecto2.Models.BONIFICACIONE>)ViewBag.BonificacionesList != null && ((List<Proyecto2.Models.BONIFICACIONE>)ViewBag.BonificacionesList).Count() > 0)
+                                {
+                                    <tr>
+                                        <td colspan="3"><b>Bonificaciones</b></td>
+                                    </tr>
+                                    foreach (var bonificacion in (List<Proyecto2.Models.BONIFICACIONE>)ViewBag.BonificacionesList)
+                                    {
+                                        <tr>
+                                            <td>@bonificacion.detalle</td>
+                                            <td>₡ @bonificacion.monto</td>
+                                        </tr>
+                                    }
+                                }
+
+                                @if ((List<Proyecto2.Models.DEDUCCIONE>)ViewBag.DeduccionesList != null && ((List<Proyecto2.Models.DEDUCCIONE>)ViewBag.DeduccionesList).Count() > 0)
+                                {
+                                    <tr>
+                                        <td colspan="3"><b>Deducciones</b></td>
+                                    </tr>
+                                    foreach (var bonificacion in (List<Proyecto2.Models.DEDUCCIONE>)ViewBag.DeduccionesList)
+                                    {
+                                        <tr>
+                                            <td>@bonificacion.detalle</td>
+                                            <td>₡ @bonificacion.monto</td>
+                                        </tr>
+                                    }
+                                }
+                                <tr>
+                                    <td>Salario neto</td>
+                                    <td>₡ @Html.DisplayFor(model => model.salarioNeto)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-8">
+                            <p><span class="fw-bold">Comentario: </span>@Html.DisplayFor(model => model.comentario)</p>
+                        </div>
+                    </div>
+                    <hr>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='@Url.Action("GestionNomina", "Nominas", new { id = Model.id })'">Regresar</button>
+</div>
+

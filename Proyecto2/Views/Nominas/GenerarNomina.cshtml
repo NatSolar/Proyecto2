@@ -1,0 +1,345 @@
+﻿@model Proyecto2.Models.NOMINA
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Generar nómina</h3>
+            <hr />
+            <form action="@Url.Action("RegistrarNomina", "Nominas")" method="post">
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="idDepartamento" class="form-label">Departamento</label>
+                            @Html.DropDownListFor(x => x.USUARIO.idDepartamento, new SelectList((List<Proyecto2.Models.DEPARTAMENTO>)ViewBag.DepartamentosList, "id", "nombre"), new { @class = "form-select" })
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="idUsuario" class="form-label">Empleado</label>
+                            @Html.DropDownListFor(x => x.USUARIO.id, new SelectList((List<Proyecto2.Models.USUARIO>)ViewBag.UsuariosPerDepartList, "id", "nombre"), new { @class = "form-select" })
+                            <input type="hidden" name="idUsuario" value="@Html.DisplayFor(Model => Model.USUARIO.id)" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="ano" class="form-label">Año</label>
+                            <select class="form-select" name="ano" id="ano">
+                                <option value="2024" selected>2024</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="mes" class="form-label">Mes</label>
+                            <select class="form-select" name="mes" id="mes">
+                                <option value="8" selected>Agosto</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body" id="bonificacionesSection">
+                                <h5 class="card-title">Bonificaciones</h5>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control bonificaciones-detalle" id="bonificacion" name="nombre" placeholder="Título de bonificación">
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <div class="input-group mb-3 col-sm-9">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">₡</span>
+                                                    </div>
+                                                    <input type="number" class="form-control bonificaciones-monto" id="montoBoni" name="monto">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <button type="button" class="btn btn-primary agregarBoni">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body" id="deduccionesSection">
+                                    <h5 class="card-title">Deducciones</h5>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control deducciones-detalle" id="deduccion" name="nombre" placeholder="Título de deducción">
+                                        </div>
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col-sm-9">
+                                                    <div class="input-group mb-3 col-sm-9">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">₡</span>
+                                                        </div>
+                                                        <input type="number" class="form-control deducciones-monto" id="montoDeduc" name="monto">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <button type="button" class="btn btn-primary agregarDeduc">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col" style="margin-right: 25%; margin-left:25%;">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Resumen</h5>
+                                <hr />
+                                <div class="row">
+                                    <div class="container" style="padding-left: 25%; padding-right: 25%;">
+                                        <div class="mb-3">
+                                            <label for="inputSalarioBase" class="form-label">Salario base</label>
+                                            <input type="number" class="form-control" id="inputSalarioBase" name="salarioBase" readonly="readonly" value="@Html.DisplayFor(Model => Model.USUARIO.salarioBase)">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="inputTotalBonificaciones" class="form-label">Total bonificaciones</label>
+                                            <input type="number" class="form-control" id="bonificacionesTotal" name="bonificacionesTotal" readonly="readonly">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="inputTotalDeducciones" class="form-label">Total deducciones</label>
+                                            <input type="number" class="form-control" id="totalDeducciones" name="deduccionesTotal" readonly="readonly">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="inputSalarioNeto" class="form-label">Salario neto</label>
+                                            <input type="number" class="form-control" id="inputSalarioNeto" name="salarioNeto" readonly="readonly">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="select-forma-pago" class="form-label">Método de pago</label>
+                                            <select class="form-select" name="idMetodoPago">
+                                                <option value="1">Transferencia</option>
+                                                <option value="2">Efectivo</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="select-forma-pago" class="form-label">Observaciones</label>
+                                            <textarea class="form-control" name="comentario"></textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <button type="submit" class="btn btn-primary">Crear nómina</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<button type="submit" class="btn btn-outline-secondary">Regresar</button>
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            $('#bonificacionesTotal').val(0);
+            $('#totalDeducciones').val(0);
+            salarioNeto();
+        });
+
+        //Bonificaciones
+        $(document).on("click", "button.agregarBoni", function () {
+            var detalle = $("input[id='bonificacion']").val();
+            var monto = $("input[id='montoBoni']").val();
+            var id = $('.bonificaciones-monto').length;
+
+            $('#bonificacionesSection').append(
+                $("<div>").addClass("row nueva-bonificacion").data("id-bonificacion", id).append(
+                    $("<div>").addClass("col-sm-6").append(
+                        $("<input>").addClass("form-control bonificaciones-detalle").attr({ "readonly": "readonly", name: "bonificaciones-d" })
+                            .data("id", id)
+                            .val(detalle)
+                    ),
+
+                    $("<div>").addClass("col-sm-6").append(
+                        $("<div>").addClass("row").append(
+                            $("<div>").addClass("col-sm-9").append(
+                                $("<div>").addClass("input-group mb-3 col-sm-9").append(
+                                    $("<div>").addClass("input-group-prepend").append(
+                                        $("<span>").addClass("input-group-text").text("₡")
+                                    ),
+
+                                    $("<input>").addClass("form-control bonificaciones-monto").attr({ "readonly": "readonly", name: "bonificaciones-m" })
+                                        .data("monto", monto)
+                                        .val(monto)
+                                )
+                            ),
+                            $("<div>").addClass("col-sm-3").append(
+                                $("<button>").addClass("btn btn-outline-danger eliminarBoni").text("-")
+                                    .data("id", id),
+                            )
+                        )
+                    )
+                )
+            )
+
+            $("input[id='bonificacion']").val('');
+            $("input[id='montoBoni']").val('');
+
+            totalBonificaciones();
+
+            salarioNeto();
+
+        });
+
+        $(document).on("click", ".eliminarBoni", function () {
+            var id = $(this).data("id")-1;
+
+            $(".nueva-bonificacion")[id].remove();
+
+            totalBonificaciones();
+
+            salarioNeto();
+
+        });
+
+
+        function totalBonificaciones() {
+
+            var totalBonificaciones = 0;
+
+            $('.bonificaciones-monto').each(function () {
+                if (isNaN(parseFloat($(this).val()))) {
+                    totalBonificaciones += 0;
+                } else {
+                    totalBonificaciones += parseFloat($(this).val());
+                }
+                $('#bonificacionesTotal').val(totalBonificaciones);
+            });
+        }
+
+
+
+        //Deducciones
+        $(document).on("click", "button.agregarDeduc", function () {
+            var detalle = $("input[id='deduccion']").val();
+            var monto = $("input[id='montoDeduc']").val();
+            var id = $('.deducciones-monto').length;
+
+            $('#deduccionesSection').append(
+                $("<div>").addClass("row nueva-deduccion").data("id-deduccion", id).append(
+                    $("<div>").addClass("col-sm-6").append(
+                        $("<input>").addClass("form-control deducciones-detalle").attr({ "readonly": "readonly", name: "deducciones-d" })
+                            .data("id", id)
+                            .val(detalle)
+                    ),
+
+                    $("<div>").addClass("col-sm-6").append(
+                        $("<div>").addClass("row").append(
+                            $("<div>").addClass("col-sm-9").append(
+                                $("<div>").addClass("input-group mb-3 col-sm-9").append(
+                                    $("<div>").addClass("input-group-prepend").append(
+                                        $("<span>").addClass("input-group-text").text("₡")
+                                    ),
+
+                                    $("<input>").addClass("form-control deducciones-monto").attr({ "readonly": "readonly", name: "deducciones-m" })
+                                        .data("monto", monto)
+                                        .val(monto)
+                                )
+                            ),
+                            $("<div>").addClass("col-sm-3").append(
+                                $("<button>").addClass("btn btn-outline-danger eliminarDeduc").text("-")
+                                    .data("id", id),
+                            )
+                        )
+                    )
+                )
+            )
+
+            $("input[id='deduccion']").val('');
+            $("input[id='montoDeduc']").val('');
+
+            totalDeducciones();
+
+            salarioNeto();
+
+        });
+
+        $(document).on("click", ".eliminarDeduc", function () {
+            var id = $(this).data("id") - 1;
+
+            $(".nueva-deduccion")[id].remove();
+
+            totalDeducciones();
+
+            salarioNeto();
+
+        });
+
+
+        function totalDeducciones() {
+
+            var totalDeducciones = 0;
+
+            $('.deducciones-monto').each(function () {
+                if (isNaN(parseFloat($(this).val()))) {
+                    totalDeducciones += 0;
+                } else {
+                    totalDeducciones += parseFloat($(this).val());
+                }
+                $('#totalDeducciones').val(totalDeducciones);
+            });
+        }
+
+        //Salario Neto
+
+        function salarioNeto() {
+
+            var salarioNeto = 0;
+
+            var salarioBase = $("#inputSalarioBase").val();
+            if (isNaN(salarioBase) || salarioBase == "") {
+                salarioBase = 0;
+            }
+
+            var totalBonificaciones = $("#bonificacionesTotal").val();
+            if (isNaN(totalBonificaciones) || totalBonificaciones == "") {
+                totalBonificaciones = 0;
+            }
+
+            var totalDeducciones = $("#totalDeducciones").val();
+            if (isNaN(totalDeducciones) || totalDeducciones == "") {
+                totalDeducciones = 0;
+            }
+
+            if (!isNaN(parseFloat(salarioBase))) {
+                salarioNeto = ((parseFloat(salarioBase) + parseFloat(totalBonificaciones)) - parseFloat(totalDeducciones));
+            }
+
+            $('#inputSalarioNeto').val(salarioNeto);
+
+        }
+
+    </script>
+}

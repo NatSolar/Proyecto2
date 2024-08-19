@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Proyecto2.Models.OBJETIVO>
+
+<h4>Gestión de objetivos</h4>
+<br />
+<button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("RegistrarObjetivo", "Objetivos")'">Crear</button>
+<br />
+<br />
+<table class="table table-striped">
+    <tr>
+        <th>No.</th>
+        <th>Detalle</th>
+        <th>Valor referencia</th>
+        <th>Peso</th>
+        <th>Periodo</th>
+        <th>Fecha de creación</th>
+        <th>Asignado a</th>
+        <th>Registrado por</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.detalle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.valorReferencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.peso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PERIODO.desde) - @Html.DisplayFor(modelItem => item.PERIODO.hasta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechaCreacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.USUARIO.nombre) @Html.DisplayFor(modelItem => item.USUARIO.apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.USUARIO1.nombre) @Html.DisplayFor(modelItem => item.USUARIO1.apellido)
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="location.href='@Url.Action("EliminarObjetivo", "Objetivos", new { id = item.id })'">Eliminar</button>
+            </td>
+        </tr>
+    }
+
+    @if(Model.Count() == 0)
+     {
+        <tr>
+            <td colspan="9" class="text-center">No hay objetivos registrados.</td>
+        </tr>
+     }
+
+</table>
+<br />
+<button type="button" class="btn btn-outline-secondary" onclick="location.href='@Url.Action("ListaRendimientos", "Rendimientos")'">Regresar</button>

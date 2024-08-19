@@ -1,0 +1,139 @@
+﻿<div class="card">
+    <div class="card-header">
+        <h3>Registro de turnos</h3>
+    </div>
+    <div class="card-body">
+        <form action="@Url.Action("GuardarTurno", "Turnos")" method="post">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <label for="idDepartamento" class="form-label">Departamento</label>
+                        <select class="form-select" name="idDepartamento" id="idDepartamento"></select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <label for="idUsuario" class="form-label">Empleado</label>
+                        <select class="form-select" name="idEmpleado" id="idEmpleado"></select>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-sm-3">
+                    <label class="form-check-label">Días que laborará</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="L" name="chk_dias">
+                        <label class="form-check-label">Lunes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="M" name="chk_dias">
+                        <label class="form-check-label">Martes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="K" name="chk_dias">
+                        <label class="form-check-label">Miércoles</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="J" name="chk_dias">
+                        <label class="form-check-label">Jueves</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="V" name="chk_dias">
+                        <label class="form-check-label">Viernes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="S" name="chk_dias">
+                        <label class="form-check-label">Sábado</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="D" name="chk_dias">
+                        <label class="form-check-label">Domingo</label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <label for="idUsuario" class="form-label">Hora de entrada</label>
+                        <input class="form-control" id="horaEntrada" name="horaEntrada" />
+                        <small class="form-text text-muted">Digitar la hora con el formato (HH:mm:ss)</small>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <label for="idUsuario" class="form-label">Hora de salida</label>
+                        <input class="form-control" id="horaSalida" name="horaSalida" />
+                        <small class="form-text text-muted">Digitar la hora con el formato (HH:mm:ss)</small>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="mb-3 pt-3">
+                        <button type="submit" class="btn btn-primary" id="btnGenerar">Registrar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            ListarDepartamentos();
+
+        })
+
+        $("#idDepartamento").on("change", function () {
+            ListarEmpleados();
+
+        })
+
+
+        function ListarDepartamentos() {
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idDepartamento")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerDepartamentos", "Nominas")',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.nombre).appendTo("#idDepartamento")
+                        })
+
+                        ListarEmpleados();
+                    }
+                }
+            })
+        }
+
+        function ListarEmpleados() {
+
+            $("#idEmpleado option").remove();
+
+            $("<option>").attr({ "value": "00", "disabled": "disabled", "selected": "true" }).text("Seleccionar").appendTo("#idEmpleado")
+
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerEmpleadosPorDepartamento", "Nominas")',
+                type: "POST",
+                data: JSON.stringify({ idDepartamento: $("#idDepartamento option:selected").val()}),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    if (data.lista != null) {
+                        $.each(data.lista, function (i, item) {
+                            $("<option>").attr({ "value": item.id }).text(item.nombre + " " + item.apellido).appendTo("#idEmpleado")
+                        })
+                    }
+                }
+            })
+        }
+
+    </script>
+}

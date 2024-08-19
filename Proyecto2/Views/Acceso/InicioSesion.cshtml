@@ -1,0 +1,21 @@
+﻿<div class="container my-5">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="d-flex justify-content-center align-items-center flex-column">
+                <form action="@Url.Action("InicioSesion", "Acceso")" method="post">
+                    <br />
+                    <h1 class="h3 mb-3 fw-normal">Inicio sesión</h1>
+                    <div class="form-floating mb-2">
+                        <input type="email" class="form-control" placeholder="name@example.com" name="Email">
+                        <label for="floatingInput">Correo electrónico</label>
+                    </div>
+                    <div class="form-floating mb-2">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="Contrasena">
+                        <label for="floatingPassword">Contraseña</label>
+                    </div>
+                    <button class="btn btn-primary w-100 py-2" type="submit">Iniciar sesión</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

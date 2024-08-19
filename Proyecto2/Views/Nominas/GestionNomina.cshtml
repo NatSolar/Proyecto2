@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Proyecto2.Models.NOMINA>
+
+<h4>Gestión de nóminas</h4>
+<br />
+<button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("CrearNomina", "Nominas")'">Crear</button>
+<br />
+<br />
+<table class="table table-hover justify-content-center">
+    <thead class="thead-light">
+        <tr>
+            <th>No. Nómina</th>
+            <th>Nombre empleado</th>
+            <th>Resumen</th>
+            <th>Mes</th>
+            <th>Año</th>
+            <th>Estado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.USUARIO.nombre) @Html.DisplayFor(modelItem => item.USUARIO.apellido)
+                </td>
+                <td>
+                    <span><b>Salario base:</b> @Html.DisplayFor(modelItem => item.salarioBase)</span><br />
+                    <span><b>Total bonificaciones:</b> @Html.DisplayFor(modelItem => item.bonificacionesTotal)</span><br />
+                    <span><b>Total deducciones:</b> @Html.DisplayFor(modelItem => item.deduccionesTotal)</span><br />
+                    <span><b>Salario neto:</b> @Html.DisplayFor(modelItem => item.salarioNeto)</span><br />
+                </td>
+                <td>
+                    @if (item.mes == 1)
+                    {<span>Enero</span> }
+                    else if (item.mes == 2)
+                    { <span>Febrero</span> }
+                    else if (item.mes == 3)
+                    { <span>Marzo</span> }
+                    else if (item.mes == 4)
+                    { <span>Abril</span> }
+                    else if (item.mes == 5)
+                    { <span>Mayo</span> }
+                    else if (item.mes == 6)
+                    { <span>Junio</span> }
+                    else if (item.mes == 7)
+                    { <span>Julio</span> }
+                    else if (item.mes == 8)
+                    { <span>Agosto</span> }
+                    else if (item.mes == 9)
+                    { <span>Setiembre</span> }
+                    else if (item.mes == 10)
+                    { <span>Octubre</span> }
+                    else if (item.mes == 11)
+                    { <span>Noviembre</span> }
+                    else if (item.mes == 12)
+                    { <span>Diciembre</span>}
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ano)
+                </td>
+                <td>
+                    @if (item.estado == 1)
+                    {
+                        <span>Pagado</span>
+                    }
+                    else
+                    {
+                        <span>Pendiente</span>
+                    }
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-dark" onclick="location.href='@Url.Action("DetalleNomina", "Nominas", new { id = item.id })'">Detalle</button>
+                    <button type="button" class="btn btn-sm btn-outline-dark" onclick="location.href='@Url.Action("EliminarNomina", "Nominas", new { id = item.id })'">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
