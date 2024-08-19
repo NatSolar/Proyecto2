@@ -6,7 +6,9 @@
     </div>
     <div class="card-body">
         <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("CrearTurno", "Turnos")'">Crear turno</button>
+        <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("VerHorarios", "Turnos")'">Ver horarios</button>
         <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("RegistrarFeriado", "Turnos")'">Registrar feriado</button>
+        <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("Agenda", "Turnos")'">Agenda</button>
         <br />
         <br />
         <table class="table table-striped">
@@ -52,8 +54,6 @@
                             @Html.DisplayFor(modelItem => item.USUARIO1.nombre) @Html.DisplayFor(modelItem => item.USUARIO1.apellido)
                         </td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-outline-info" onclick="location.href='@Url.Action("EditarTurno", "Turnos", new { id = item.id })'">Editar</button>
-                            <button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("DetallesTurno", "Turnos", new { id = item.id })'">Detalles</button>
                             <button type="button" class="btn btn-sm btn-outline-danger" onclick="location.href='@Url.Action("EliminarTurno", "Turnos", new { id = item.id })'">Eliminar</button>
                         </td>
                     </tr>

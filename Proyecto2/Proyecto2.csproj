@@ -171,6 +171,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Genero.cs" />
+    <Compile Include="Models\HorarioMdl.cs" />
     <Compile Include="Models\METODO_PAGO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -277,6 +278,10 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\natsolar - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\natsolar - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\natsolar - Web Deploy2.pubxml" />
+    <None Include="Properties\PublishProfiles\Proyecto2-NSA - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -318,6 +323,7 @@
     <Content Include="Views\Turnos\Agenda.cshtml" />
     <Content Include="Views\Turnos\Index.cshtml" />
     <Content Include="Views\Turnos\CrearTurno.cshtml" />
+    <Content Include="Views\Turnos\VerHorarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

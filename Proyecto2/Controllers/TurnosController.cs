@@ -176,6 +176,185 @@ namespace Proyecto2.Controllers
         }
 
 
+        public ActionResult VerHorarios()
+        {
+            List<HorarioMdl> horarios = new List<HorarioMdl>();
+
+            List<HorarioMdl> horarioLunes = new List<HorarioMdl>();
+            List<HorarioMdl> horarioMartes = new List<HorarioMdl>();
+            List<HorarioMdl> horarioMiercoles = new List<HorarioMdl>();
+            List<HorarioMdl> horarioJueves = new List<HorarioMdl>();
+            List<HorarioMdl> horarioViernes = new List<HorarioMdl>();
+            List<HorarioMdl> horarioSabado = new List<HorarioMdl>();
+            List<HorarioMdl> horarioDomingo = new List<HorarioMdl>();
+
+            try
+            {
+                using (Models.Entities db = new Models.Entities())
+                {
+
+                    var turnosList = (from d in db.TURNO
+                                      select d).ToList();                    
+
+                    if (turnosList != null)
+                    {
+                        foreach (var turno in turnosList)
+                        {
+                           
+
+
+                            if (turno.dias.Contains("L"))
+                            {
+                                var empleado = (from d in db.USUARIO
+                                                where d.id == turno.idEmpleado
+                                                select d).FirstOrDefault();
+
+                                var oHorario = new HorarioMdl()
+                                {
+                                    idEmpleado = turno.idEmpleado,
+                                    dia = "L",
+                                    horaEntrada = turno.horaEntrada,
+                                    horaSalida = turno.horaSalida,
+                                    USUARIO = empleado
+                                };
+
+                                horarioLunes.Add(oHorario);
+                            }
+
+                            if (turno.dias.Contains("M"))
+                            {
+                                var empleado = (from d in db.USUARIO
+                                                where d.id == turno.idEmpleado
+                                                select d).FirstOrDefault();
+
+                                var oHorario = new HorarioMdl()
+                                {
+                                    idEmpleado = turno.idEmpleado,
+                                    dia = "M",
+                                    horaEntrada = turno.horaEntrada,
+                                    horaSalida = turno.horaSalida,
+                                    USUARIO = empleado
+                                };
+
+                                horarioMartes.Add(oHorario);
+                            }
+
+                            if (turno.dias.Contains("K"))
+                            {
+                                var empleado = (from d in db.USUARIO
+                                                where d.id == turno.idEmpleado
+                                                select d).FirstOrDefault();
+
+                                var oHorario = new HorarioMdl()
+                                {
+                                    idEmpleado = turno.idEmpleado,
+                                    dia = "K",
+                                    horaEntrada = turno.horaEntrada,
+                                    horaSalida = turno.horaSalida,
+                                    USUARIO = empleado
+                                };
+
+                                horarioMiercoles.Add(oHorario);
+                            }
+
+                            if (turno.dias.Contains("J"))
+                            {
+                                var empleado = (from d in db.USUARIO
+                                                where d.id == turno.idEmpleado
+                                                select d).FirstOrDefault();
+
+                                var oHorario = new HorarioMdl()
+                                {
+                                    idEmpleado = turno.idEmpleado,
+                                    dia = "J",
+                                    horaEntrada = turno.horaEntrada,
+                                    horaSalida = turno.horaSalida,
+                                    USUARIO = empleado
+                                };
+
+                                horarioJueves.Add(oHorario);
+                            }
+
+                            if (turno.dias.Contains("V"))
+                            {
+                                var empleado = (from d in db.USUARIO
+                                                where d.id == turno.idEmpleado
+                                                select d).FirstOrDefault();
+
+                                var oHorario = new HorarioMdl()
+                                {
+                                    idEmpleado = turno.idEmpleado,
+                                    dia = "V",
+                                    horaEntrada = turno.horaEntrada,
+                                    horaSalida = turno.horaSalida,
+                                    USUARIO = empleado
+                                };
+
+                                horarioViernes.Add(oHorario);
+                            }
+
+                            if (turno.dias.Contains("S"))
+                            {
+                                var empleado = (from d in db.USUARIO
+                                                where d.id == turno.idEmpleado
+                                                select d).FirstOrDefault();
+
+                                var oHorario = new HorarioMdl()
+                                {
+                                    idEmpleado = turno.idEmpleado,
+                                    dia = "S",
+                                    horaEntrada = turno.horaEntrada,
+                                    horaSalida = turno.horaSalida,
+                                    USUARIO = empleado
+                                };
+
+                                horarioSabado.Add(oHorario);
+                            }
+
+                            if (turno.dias.Contains("D"))
+                            {
+                                var empleado = (from d in db.USUARIO
+                                                where d.id == turno.idEmpleado
+                                                select d).FirstOrDefault();
+
+                                var oHorario = new HorarioMdl()
+                                {
+                                    idEmpleado = turno.idEmpleado,
+                                    dia = "D",
+                                    horaEntrada = turno.horaEntrada,
+                                    horaSalida = turno.horaSalida,
+                                    USUARIO = empleado
+                                };
+
+                                horarioDomingo.Add(oHorario);
+                            }
+
+                            
+
+                        }
+
+                        ViewBag.horarioLunes = horarioLunes;
+                        ViewBag.horarioMartes = horarioMartes;
+                        ViewBag.horarioMiercoles = horarioMiercoles;
+                        ViewBag.horarioJueves = horarioJueves;
+                        ViewBag.horarioViernes = horarioViernes;
+                        ViewBag.horarioSabado = horarioSabado;
+                        ViewBag.horarioDomingo = horarioDomingo;
+                    }
+
+
+                    return View (horarios);
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+
+            return View();
+        }
+
         /**************************/
 
         public ActionResult GetEventData()
