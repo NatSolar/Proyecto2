@@ -1,4 +1,5 @@
-﻿using Proyecto2.Models;
+﻿using Proyecto2.Filters;
+using Proyecto2.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,11 +12,13 @@ namespace Proyecto2.Controllers
 {
     public class TurnosController : Controller
     {
+        [AutorizarUsuario(idOperacion: 12)]
         public ActionResult Agenda()
         {
             return View();
         }
 
+        [AutorizarUsuario(idOperacion: 13)]
         public ActionResult Index()
         {
             try
@@ -83,11 +86,13 @@ namespace Proyecto2.Controllers
             }
         }
 
+        [AutorizarUsuario(idOperacion: 14)]
         public ActionResult CrearTurno()
         {
             return View();
         }
 
+        [AutorizarUsuario(idOperacion: 11)]
         public ActionResult CrearEvento(EVENTO oEvento)
         {
             var newEvento = new EVENTO()
@@ -172,7 +177,7 @@ namespace Proyecto2.Controllers
 
         }
 
-
+        [AutorizarUsuario(idOperacion: 14)]
         public ActionResult EliminarTurno(int id)
         {
             try
@@ -205,6 +210,7 @@ namespace Proyecto2.Controllers
         }
 
 
+        [AutorizarUsuario(idOperacion: 13)]
         public ActionResult VerHorarios()
         {
             List<HorarioMdl> horarios = new List<HorarioMdl>();

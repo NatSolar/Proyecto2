@@ -69,6 +69,7 @@ namespace Proyecto2.Controllers
             return View();
         }
 
+        [AutorizarUsuario(idOperacion: 9)]
         public ActionResult EvaluarEmpleado(EVALUACION oEvaluacion)
         {
             DateTime sysdate = DateTime.Now;

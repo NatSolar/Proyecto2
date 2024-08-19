@@ -1,4 +1,5 @@
-﻿using Proyecto2.Models;
+﻿using Proyecto2.Filters;
+using Proyecto2.Models;
 using Rotativa;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace Proyecto2.Controllers
             return View();
         }
 
+        [AutorizarUsuario(idOperacion: 7)]
         public ActionResult GestionNomina()
         {
             try
@@ -49,6 +51,7 @@ namespace Proyecto2.Controllers
             }
         }
 
+        [AutorizarUsuario(idOperacion: 6)]
         public ActionResult CrearNomina()
         {
             try
@@ -71,6 +74,7 @@ namespace Proyecto2.Controllers
             }
         }
 
+        [AutorizarUsuario(idOperacion: 6)]
         public ActionResult GenerarNomina(NOMINA oNomina)
         {
             USUARIO usuario = new USUARIO();
@@ -112,6 +116,7 @@ namespace Proyecto2.Controllers
             }
         }
 
+        [AutorizarUsuario(idOperacion: 7)]
         public ActionResult DetalleNomina(int id)
         {
             try
@@ -326,6 +331,7 @@ namespace Proyecto2.Controllers
             return Json(new { lista = olista }, JsonRequestBehavior.AllowGet);
         }
 
+        [AutorizarUsuario(idOperacion: 6)]
         public ActionResult EliminarNomina(int id)
         {
             try

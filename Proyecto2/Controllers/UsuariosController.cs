@@ -335,12 +335,23 @@ namespace Proyecto2.Controllers
 
         }
 
+        [AutorizarUsuario(idOperacion: 1)]
         public ActionResult EliminarUsuario(int id)
         {
             try
             {
                 using (Models.Entities db = new Models.Entities())
                 {
+                    var oOperaciones = (from op in db.USUARIO_OPERACIONES
+                                        where op.idUsuario == id
+                                        select op).ToList();
+
+                    foreach(var op in oOperaciones)
+                    {
+                        db.USUARIO_OPERACIONES.Remove(op);
+                        db.SaveChanges();
+                    }
+
                     var deleteUsuario = (from usuario in db.USUARIO
                                          where usuario.id == id
                                          select usuario).FirstOrDefault();
