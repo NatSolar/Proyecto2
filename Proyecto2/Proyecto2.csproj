@@ -282,6 +282,7 @@
     <None Include="Properties\PublishProfiles\natsolar - Web Deploy1.pubxml" />
     <None Include="Properties\PublishProfiles\natsolar - Web Deploy2.pubxml" />
     <None Include="Properties\PublishProfiles\Proyecto2-NSA - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\Proyecto2-NSA - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

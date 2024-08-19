@@ -5,7 +5,8 @@
       "secretStore": "AzureAppSettings",
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/proyecto2-nsa/databases/Proyecto2-NSA",
       "type": "mssql.azure",
-      "connectionId": "MyDbConnection"
+      "connectionId": "MyDbConnection",
+      "dynamicId": null
     }
   }
 }

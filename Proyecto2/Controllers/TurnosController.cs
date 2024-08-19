@@ -88,9 +88,38 @@ namespace Proyecto2.Controllers
             return View();
         }
 
-        public ActionResult RegistrarFeriado()
+        public ActionResult CrearEvento(EVENTO oEvento)
         {
-            return View();
+            var newEvento = new EVENTO()
+            {
+                nombre = oEvento.nombre,
+                informacion = oEvento.informacion,
+                horaEntrada = oEvento.horaEntrada,
+                horaSalida = oEvento.horaSalida
+            };
+
+            try
+            {
+                using (Models.Entities db = new Models.Entities())
+                {
+                    var insertEvento = db.EVENTO.Add(newEvento);
+                    db.SaveChanges();
+
+                    if (insertEvento == null)
+                    {
+                        ViewBag.Error = "No se pudo registrar el evento.";
+                        return View();
+                    }
+
+                    return RedirectToAction("Agenda", "Turnos");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
         }
 
 

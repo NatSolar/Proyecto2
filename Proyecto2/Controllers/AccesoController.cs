@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
+using System.Web.Services.Description;
 
 namespace Proyecto2.Controllers
 {
@@ -36,7 +37,7 @@ namespace Proyecto2.Controllers
 
                     if (oUsuario == null)
                     {
-                        ViewBag.Error = "Usuario o contraseña inválida";
+                        ViewData["Error"] = "No se encontró el usuario.";
                         return View();
                     }
 
