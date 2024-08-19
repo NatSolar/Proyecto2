@@ -27,20 +27,20 @@ namespace Proyecto2.Models
     
         public virtual DbSet<BONIFICACIONE> BONIFICACIONES { get; set; }
         public virtual DbSet<DEDUCCIONE> DEDUCCIONES { get; set; }
-        public virtual DbSet<DEPARTAMENTO> DEPARTAMENTOes { get; set; }
-        public virtual DbSet<EVALUACION> EVALUACIONs { get; set; }
-        public virtual DbSet<EVENTO> EVENTOes { get; set; }
+        public virtual DbSet<DEPARTAMENTO> DEPARTAMENTO { get; set; }
+        public virtual DbSet<EVALUACION> EVALUACION { get; set; }
+        public virtual DbSet<EVENTO> EVENTO { get; set; }
         public virtual DbSet<METODO_PAGO> METODO_PAGO { get; set; }
-        public virtual DbSet<MODULO> MODULOes { get; set; }
-        public virtual DbSet<NOMINA> NOMINAs { get; set; }
+        public virtual DbSet<MODULO> MODULO { get; set; }
+        public virtual DbSet<NOMINA> NOMINA { get; set; }
         public virtual DbSet<OBJETIVO> OBJETIVOS { get; set; }
         public virtual DbSet<OPERACIONE> OPERACIONES { get; set; }
-        public virtual DbSet<PERIODO> PERIODOes { get; set; }
-        public virtual DbSet<PUESTO> PUESTOes { get; set; }
-        public virtual DbSet<ROL> ROLs { get; set; }
+        public virtual DbSet<PERIODO> PERIODO { get; set; }
+        public virtual DbSet<PUESTO> PUESTO { get; set; }
+        public virtual DbSet<ROL> ROL { get; set; }
         public virtual DbSet<ROL_OPERACION> ROL_OPERACION { get; set; }
-        public virtual DbSet<TURNO> TURNOes { get; set; }
-        public virtual DbSet<USUARIO> USUARIOs { get; set; }
+        public virtual DbSet<TURNO> TURNO { get; set; }
+        public virtual DbSet<USUARIO> USUARIO { get; set; }
         public virtual DbSet<USUARIO_OPERACIONES> USUARIO_OPERACIONES { get; set; }
     }
 }
